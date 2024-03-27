@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { View, Image, Text } from 'react-native'
 import { useRef } from 'react'
 
 const colours= {
@@ -38,7 +38,7 @@ const TypeInfo=({type})=>{
       }}
     >
       <Image width={24} height={24} className='h-[16px] w-[16px] re1:h-[24px] re1:w-[24px] my-1' src={url} alt='poketype'/>
-      <span ref={Span} className='mx-1 text-xs font-bold hidden text-white'>{type}</span>
+      <Text ref={Span} className='mx-1 text-xs font-bold hidden text-white'>{type}</Text>
     </View>
   )
 }

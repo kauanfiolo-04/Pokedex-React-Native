@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getPokemons } from '../loaders/getPokemons'
+import { View, StyleSheet } from 'react-native'
 import PokeCard from './PokeCard'
-import { FlatList } from 'react-native'
 
 const ListPokemons=({limit, offset})=>{
   const [pokemons,setPokemons]=useState([])

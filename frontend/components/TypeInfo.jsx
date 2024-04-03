@@ -27,7 +27,7 @@ const TypeInfo=({type})=>{
 
   return(
     <View  style={[styles.container, {backgroundColor:colour}]}>
-      <Image width={24} height={24} style={styles.image} src={url} alt='poketype'/>
+      <Image width={24} height={24} style={styles.image} source={{uri:url}} alt='poketype'/>
       <Text style={styles.text}>{type}</Text>
     </View>
   )

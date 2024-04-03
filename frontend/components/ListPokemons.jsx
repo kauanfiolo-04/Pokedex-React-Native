@@ -14,10 +14,10 @@ const ListPokemons=({limit, offset})=>{
       <View key={index} stytle={styles.container}>
         <PokeCard
           id={poke?.id ?? 0}
-          types={poke?.types ?? [{ slot:0, type:{name:'normal', url:''} }]}
-          name={poke?.name ?? ''}
+          types={poke?.types}
+          name={poke?.name ?? '...'}
           img={{
-            url:poke?.sprites.front_default ?? '',
+            url:poke?.sprites.front_default,
             gif: poke?.sprites.other.showdown.front_default
           }}
         />

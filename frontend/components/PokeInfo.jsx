@@ -1,21 +1,11 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
-import TypeInfo from './TypeInfo'; // Assumindo que TypeInfo é compatível com React Native
-// Importe o sistema de navegação, se necessário, para lidar com a navegação
-import { useNavigation } from '@react-navigation/native'
+import { Text, Image, View, StyleSheet } from 'react-native';
 
-const PokeCard = ({ id, name, types, img}) => {
-  const navigation = useNavigation(); // Se estiver usando React Navigation
-
+const PokeCard = ({ id, name, types, img, pokeScreen }) => {
   return (
-    
-    <TouchableOpacity
-      onPress={() => {
-        navigation.navigate('Poke', { name }) 
-      }}
+    <View
       style={styles.card}
     >
-
       {(img.gif || img.url) && (
         <View style={styles.imageContainer}>
           <Image
@@ -37,13 +27,13 @@ const PokeCard = ({ id, name, types, img}) => {
       <View style={styles.idContainer}>
         <Text style={styles.id}>#{id.toString().padStart(3, '0')}</Text>
       </View>
-    </TouchableOpacity>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     paddingHorizontal: 5,
     justifyContent: 'center',
     alignItems: 'center',
@@ -51,14 +41,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     marginVertical: 5,
-    paddingVertical: 10
+    paddingVertical: 10,
+    height: '100%'
   },
   imageContainer: {
     paddingHorizontal: 30
   },
   image: {
-    width: 65,
-    height: 65,
+    width: 125,
+    height: 125,
   },
   infoContainer: {
     flex: 2,

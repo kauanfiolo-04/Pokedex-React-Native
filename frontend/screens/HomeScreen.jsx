@@ -5,7 +5,7 @@ import ListPokemons from '../components/ListPokemons'
 import PokeCard from '../components/PokeCard'
 
 const HomeScreen=({navigation})=>{
-  const [limit, setLimit]=useState(5)
+  const [limit, setLimit]=useState(6)
   const [offset, setOffset]=useState(0)
 
   return(

@@ -1,7 +1,7 @@
 import { getPokemon } from "./getPokemon"
 
 export const getPokemons=async(limit, offset)=>{
-  const url=`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`
+  const url=`https://pokeapi.co/api/v2/pokemon?limit=${limit}`
   console.log('Fetching:'+ url)
   const pokemons=await fetch(url)
     .then(r=>r.json()).then(data=>data.results).catch(err=>console.error(err)) ?? []
@@ -9,7 +9,6 @@ export const getPokemons=async(limit, offset)=>{
   const finalPokemons=[]
 
   for(const poke of pokemons){
-    console.log(poke.name)
     await getPokemon(poke.name).then(poke=>finalPokemons.push(poke))
   }
  

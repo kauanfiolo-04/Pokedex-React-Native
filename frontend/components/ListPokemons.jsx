@@ -5,6 +5,7 @@ import PokeCard from './PokeCard'
 
 const ListPokemons=({limit, offset})=>{
   const [pokemons,setPokemons]=useState([])
+  const pokeScreen = true
 
   useEffect(()=>{
     getPokemons(limit, offset).then(r=>setPokemons(r))

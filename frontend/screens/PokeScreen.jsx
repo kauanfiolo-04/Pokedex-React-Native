@@ -1,14 +1,14 @@
 import { Button, Text, View } from 'react-native'
-import PokeCard from '../components/PokeCard'
+import PokeInfo from '../components/PokeInfo'
 import { useEffect, useState } from 'react'
 import { getPokemon } from '../loaders/getPokemon'
 
 const PokeScreen=({route, navigation})=>{
   const {name} = route.params
-  const [pokeInfo, setPokeInfo]=useState(null)
+  const [pokeData, setPokeData]=useState(null)
 
   useEffect(()=>{
-    getPokemon(name).then(r=>setPokeInfo(r))
+    getPokemon(name).then(r=>setPokeData(r))
   },[])
 
   return(
@@ -17,13 +17,13 @@ const PokeScreen=({route, navigation})=>{
         title="go to Home"
         onPress={()=>navigation.navigate('Home')}
       />
-      <PokeCard 
-        id={pokeInfo?.id ?? 0}
-        types={pokeInfo?.types ?? [{ slot:0, type:{name:'normal', url:''} }]}
-        name={pokeInfo?.name ?? ''}
+      <PokeInfo
+        id={pokeData?.id ?? 0}
+        types={pokeData?.types ?? [{ slot:0, type:{name:'normal', url:''} }]}
+        name={pokeData?.name ?? ''}
         img={{
-          url:pokeInfo?.sprites.front_default ?? '',
-          gif: pokeInfo?.sprites.other.showdown.front_default
+          url:pokeData?.sprites.front_default ?? '',
+          gif: pokeData?.sprites.other.showdown.front_default
         }}
       />
     </View>

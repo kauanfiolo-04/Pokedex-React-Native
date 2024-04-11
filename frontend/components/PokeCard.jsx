@@ -24,7 +24,7 @@ const PokeCard = ({ id, name, types, img}) => {
           />
         </View>
       )}
-      {/* <View style={styles.infoContainer}>
+      <View style={styles.infoContainer}>
         <Text style={styles.name}>{name}</Text>
         {types.length > 0 && (
           <View style={styles.typesContainer}>
@@ -33,7 +33,7 @@ const PokeCard = ({ id, name, types, img}) => {
             ))}
           </View>
         )}
-      </View> */}
+      </View>
       <View style={styles.idContainer}>
         <Text style={styles.id}>#{id.toString().padStart(3, '0')}</Text>
       </View>
@@ -51,28 +51,40 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 10,
     marginVertical: 5,
-    paddingVertical: 10
+    paddingVertical: 10,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   },
   imageContainer: {
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
   },
   image: {
     width: 65,
     height: 65,
   },
   infoContainer: {
-    flex: 2,
+    flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'flex-start',
   },
   name: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems:'center',
     fontSize: 18, // Adapte para responsividade se necessário
     textTransform: 'capitalize',
   },
   typesContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
   },
   idContainer: {
     flex: 1,
@@ -80,7 +92,8 @@ const styles = StyleSheet.create({
   },
   id: {
     fontSize: 24, // Adapte conforme necessário
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    color: "#7c7c7c"
   },
 })
 

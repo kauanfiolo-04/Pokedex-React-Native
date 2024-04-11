@@ -1,17 +1,12 @@
-import React from 'react';
-import { Text, Image, View, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, Image, View, StyleSheet } from "react-native";
 
 const PokeCard = ({ id, name, types, img, pokeScreen }) => {
   return (
-    <View
-      style={styles.card}
-    >
+    <View style={styles.card}>
       {(img.gif || img.url) && (
         <View style={styles.imageContainer}>
-          <Image
-            style={styles.image}
-            source={{ uri: img.gif || img.url }}
-          />
+          <Image style={styles.image} source={{ uri: img.gif || img.url }} />
         </View>
       )}
       {/* <View style={styles.infoContainer}>
@@ -25,27 +20,34 @@ const PokeCard = ({ id, name, types, img, pokeScreen }) => {
         )}
       </View> */}
       <View style={styles.idContainer}>
-        <Text style={styles.id}>#{id.toString().padStart(3, '0')}</Text>
+        <Text style={styles.id}>{id.toString().padStart(3, "0")}</Text>
       </View>
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   card: {
-    flexDirection: 'column',
+    flexDirection: "column",
     paddingHorizontal: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    backgroundColor: 'white',
+    justifyContent: "center",
+    alignItems: "center",
+    width: "98%",
+    marginLeft: 5,
+    marginRight: 10,
+    backgroundColor: "white",
     borderRadius: 10,
     marginVertical: 5,
-    paddingVertical: 10,
-    height: '100%'
+    paddingVertical: 50,
+    height: "90%",
+    borderColor: "black",
+    borderWidth: 1, // Defina a largura da borda conforme necessário
+    borderStyle: "solid", // Especifique o estilo da borda, neste caso, sólido
+    borderRadius: 10
   },
   imageContainer: {
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+
   },
   image: {
     width: 125,
@@ -53,26 +55,29 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     flex: 2,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-start",
   },
   name: {
     fontSize: 18, // Adapte para responsividade se necessário
-    textTransform: 'capitalize',
+    textTransform: "capitalize",
   },
   typesContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
   },
   idContainer: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
+    marginTop: 50,
+    width: "100%",
   },
   id: {
     fontSize: 24, // Adapte conforme necessário
-    paddingHorizontal: 30
+    paddingHorizontal: 30,
+    color: "#7c7c7c"
   },
-})
+});
 
 export default PokeCard;

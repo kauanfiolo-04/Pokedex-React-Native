@@ -7,7 +7,6 @@ app.use(express.json())
 const port=3000
 config()
 
-mongoose.connect(process.env.MONGODB_URI)
 
 const Poke = mongoose.model('Poke',{
   pokeId:String,
@@ -23,17 +22,46 @@ app.post('/', async(req,res)=>{
     pokeName:body.pokeName,
     pokeTypes:body.pokeTypes
   })
-
+  
   await poke.save()
-
-  res.send(poke)
+  
+  return res.send(poke)
 })
 
-app.get('/', (req, res)=>{
-  res.send('Hello Word')
+app.delete('/:pokeId', async (req,res)=>{
+  try{
+    const poke=await Poke.findOneAndDelete({pokeId:req.params.pokeId})
+    return res.send(poke)
+  }catch(error){
+    console.error(error)
+    return res.sendStatus(404)
+  }
+})
+
+app.put('/:pokeId', async (req,res)=>{
+  try{
+    const pokeUpdated={}
+    const body=req.body
+
+    body.pokeId && (pokeUpdated[pokeId]=body.pokeId)
+    body.pokeName && (pokeUpdated[pokeName]=body.pokeName)
+    body.pokeTypes && (pokeUpdated[pokeTypes]=body.pokeTypes)
+
+    const poke=await Poke.findOneAndReplace({pokeId:req.params.pokeId}, pokeUpdated)
+    return res.send(poke)
+  }catch(error){
+    console.error(error)
+    return res.sendStatus(404)
+  }
+})
+
+app.get('/', async (req, res)=>{
+  const pokes= await Poke.find()
+  return res.send(pokes)
 })
 
 app.listen(port, ()=>{
+  mongoose.connect(process.env.MONGODB_URI)
   console.log(`App Running in port...${port}`)
 })
 

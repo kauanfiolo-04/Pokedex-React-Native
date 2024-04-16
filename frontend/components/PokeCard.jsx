@@ -11,7 +11,7 @@ const PokeCard = ({ id, name, types, img}) => {
     
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('Poke', { name }) 
+        navigation.navigate('Pokémon', { name }) 
       }}
       style={styles.card}
     >

@@ -13,10 +13,6 @@ const PokeScreen=({route, navigation})=>{
 
   return(
     <View>
-      <Button
-        title="go to Home"
-        onPress={()=>navigation.navigate('Home')}
-      />
       <PokeInfo
         id={pokeData?.id ?? 0}
         types={pokeData?.types ?? [{ slot:0, type:{name:'normal', url:''} }]}

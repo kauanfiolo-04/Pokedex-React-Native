@@ -10,7 +10,6 @@ const HomeScreen=({navigation})=>{
 
   return(
     <View>
-      <Text>Home Screen</Text>
       {/* <Button
         title="go to pokeScreen"
         onPress={()=>navigation.navigate('Poke')}

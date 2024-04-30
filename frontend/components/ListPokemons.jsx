@@ -1,11 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getPokemons } from "../loaders/getPokemons";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
 import PokeCard from "./PokeCard";
 
+const searchMenuBarLoader = async (term, signal)=>{
+  const url=`https://pokeapi.co/api/v2/pokemon/${term}`
+
+  return await fetch(url, {signal}).catch(err=>console.error('Error: '+err))
+}
+
 const ListPokemons = ({ limit, offset }) => {
   const [pokemons, setPokemons] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const currentController=useRef(null)
+
+
+  const fetchData=async ()=>{
+    currentController.current = new AbortController()
+    try {
+      const valueInputed=finalInputValue.current
+      const poke = await searchMenuBarLoader(valueInputed, currentController.current.signal)
+
+      setPokemons([poke])
+      currentController.current = null // Limpa a referência após a conclusão
+    } catch (error) {
+        // Verificar se o erro é um erro de aborto
+        if (error.name === 'AbortError') {
+            console.log('Fetch foi cancelado')
+        } else {
+            console.error(error)
+        }
+    }
+  }
 
   useEffect(() => {
     getPokemons(limit, offset).then((r) => setPokemons(r));

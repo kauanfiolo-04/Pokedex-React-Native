@@ -13,7 +13,7 @@ const ListPokemons = ({ limit, offset }) => {
     currentController.current = new AbortController();
     try {
       const poke = await searchMenuBarLoader(valueInputed, currentController.current.signal);
-      setPokemons([poke]);
+      if(poke!=='vazio') setPokemons([poke]);
       currentController.current = null; // Limpa a referência após a conclusão
     } catch (error) {
         // Verificar se o erro é um erro de aborto
@@ -34,8 +34,10 @@ const ListPokemons = ({ limit, offset }) => {
   },[searchQuery]);
 
   const filteredPokemons = pokemons.filter(pokemon =>
-    pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+    pokemon.name?.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  useEffect(()=>{console.log(pokemons)},[pokemons])
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>

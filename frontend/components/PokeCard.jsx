@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
 import TypeInfo from './TypeInfo'; // Assumindo que TypeInfo é compatível com React Native
 // Importe o sistema de navegação, se necessário, para lidar com a navegação
 import { useNavigation } from '@react-navigation/native'
@@ -9,7 +9,7 @@ const PokeCard = ({ id, name, types, img}) => {
 
   return (
     
-    <TouchableOpacity
+    <Pressable
       onPress={() => {
         navigation.navigate('Pokémon', { name }) 
       }}
@@ -37,7 +37,7 @@ const PokeCard = ({ id, name, types, img}) => {
       <View style={styles.idContainer}>
         <Text style={styles.id}>#{id.toString().padStart(3, '0')}</Text>
       </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 

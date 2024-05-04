@@ -6,38 +6,38 @@ import PokeCard from "./PokeCard";
 
 const ListPokemons = ({ limit, offset }) => {
   const [pokemons, setPokemons] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [search, setSearch]=useState("");
   const currentController=useRef(null);
+  const standardPoke=useRef(null);
 
   const fetchData=async (valueInputed)=>{
     currentController.current = new AbortController();
+
     try {
       const poke = await searchMenuBarLoader(valueInputed, currentController.current.signal);
-      if(poke!=='vazio') setPokemons([poke]);
+      poke!=='vazio' ? setPokemons([poke]) : setPokemons(standardPoke.current);
       currentController.current = null; // Limpa a referência após a conclusão
     } catch (error) {
         // Verificar se o erro é um erro de aborto
         if (error.name === 'AbortError') {
-          console.log('Fetch foi cancelado')
+          console.log('Fetch foi cancelado');
         } else {
-          console.error(error)
+          console.error(error);
         }
     }
   }
 
   useEffect(() => {
-    getPokemons(limit, offset).then((r) => setPokemons(r));
+    getPokemons(limit, offset).then((r) =>{
+      setPokemons(r);
+      if(standardPoke.current===null) standardPoke.current=r;
+    })
   }, [limit, offset]);
 
   useEffect(()=>{
-    fetchData(searchQuery);
-  },[searchQuery]);
-
-  const filteredPokemons = pokemons.filter(pokemon =>
-    pokemon.name?.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  useEffect(()=>{console.log(pokemons)},[pokemons])
+    // passsando lowercase pois o celular sempre deixa a primeira letra minuscula fazendo com q de errado a pesquisa
+    search!=='' ? fetchData(search.toLowerCase()) : setPokemons(standardPoke.current);
+  },[search]);
 
   const renderItem = ({ item }) => (
     <View style={styles.item}>
@@ -56,13 +56,14 @@ const ListPokemons = ({ limit, offset }) => {
   return (
     <View style={styles.container}>
       <TextInput
+        value={search}
         style={styles.searchArea}
-        placeholder="Type the Pokémon name"
-        value={searchQuery}
-        onChangeText={setSearchQuery}
+        placeholder="Type the Pokémon name or ID"
+        keyboardType="default"
+        onChangeText={setSearch}
       />
       <FlatList
-        data={filteredPokemons}
+        data={pokemons}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
@@ -77,13 +78,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7
   },
   searchArea: {
-    /* width: "100%",
+    width: "100%",
     height: 40,
     paddingHorizontal: 10,
     marginBottom: 10,
     borderWidth: 1,
     borderColor: "gray",
-    borderRadius: 5, */
+    borderRadius: 5
   },
   list: {
     /* flex: 1, */

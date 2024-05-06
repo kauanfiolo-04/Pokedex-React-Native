@@ -16,9 +16,8 @@ const ListPokemons = ({ limit, offset }) => {
     try {
       const poke = await searchMenuBarLoader(valueInputed, currentController.current.signal);
       poke!=='vazio' ? setPokemons([poke]) : setPokemons(standardPoke.current);
-      currentController.current = null; // Limpa a referência após a conclusão
+      currentController.current = null; 
     } catch (error) {
-        // Verificar se o erro é um erro de aborto
         if (error.name === 'AbortError') {
           console.log('Fetch foi cancelado');
         } else {
@@ -62,12 +61,13 @@ const ListPokemons = ({ limit, offset }) => {
         keyboardType="default"
         onChangeText={setSearch}
       />
-      <FlatList
+      {/* <FlatList
         data={pokemons}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
-      />
+      /> */}
+      
     </View>
   );
 };
@@ -75,7 +75,7 @@ const ListPokemons = ({ limit, offset }) => {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 20,
-    paddingHorizontal: 7
+    paddingHorizontal: 7,
   },
   searchArea: {
     width: "100%",

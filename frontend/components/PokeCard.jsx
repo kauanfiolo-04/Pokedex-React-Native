@@ -1,11 +1,10 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-import TypeInfo from './TypeInfo'; // Assumindo que TypeInfo é compatível com React Native
-// Importe o sistema de navegação, se necessário, para lidar com a navegação
+import TypeInfo from './TypeInfo'; 
 import { useNavigation } from '@react-navigation/native'
 
 const PokeCard = ({ id, name, types, img}) => {
-  const navigation = useNavigation(); // Se estiver usando React Navigation
+  const navigation = useNavigation();
 
   return (
     
@@ -78,7 +77,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems:'center',
-    fontSize: 18, // Adapte para responsividade se necessário
+    fontSize: 18,
     textTransform: 'capitalize',
   },
   typesContainer: {
@@ -91,7 +90,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   id: {
-    fontSize: 24, // Adapte conforme necessário
+    fontSize: 24,
     paddingHorizontal: 30,
     color: "#7c7c7c"
   },

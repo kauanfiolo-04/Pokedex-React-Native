@@ -21,13 +21,34 @@ const colours= {
 	fairy: '#D685AD',
 }
 
+const typeImages = {
+  normal: require('../assets/PokeTypes/normal.png'),
+  fire: require('../assets/PokeTypes/fire.png'),
+  water: require('../assets/PokeTypes/water.png'),
+  electric: require('../assets/PokeTypes/electric.png'),
+  grass: require('../assets/PokeTypes/grass.png'),
+  ice: require('../assets/PokeTypes/ice.png'),
+  fighting: require('../assets/PokeTypes/fighting.png'),
+  poison: require('../assets/PokeTypes/poison.png'),
+  ground: require('../assets/PokeTypes/ground.png'),
+  flying: require('../assets/PokeTypes/flying.png'),
+  psychic: require('../assets/PokeTypes/psychic.png'),
+  bug: require('../assets/PokeTypes/bug.png'),
+  rock: require('../assets/PokeTypes/rock.png'),
+  ghost: require('../assets/PokeTypes/ghost.png'),
+  dragon: require('../assets/PokeTypes/dragon.png'),
+  dark: require('../assets/PokeTypes/dark.png'),
+  steel: require('../assets/PokeTypes/steel.png'),
+  fairy: require('../assets/PokeTypes/fairy.png'),
+};
+
 const TypeInfo=({type})=>{
   const colour=colours[type] ?? '#777'
-  const url=`/PokeTypesIcons/${type}.png`
+  const img=typeImages[type]
 
   return(
     <View  style={[styles.container, {backgroundColor:colour}]}>
-      <Image width={24} height={24} style={styles.image} source={{uri:url}} alt='poketype'/>
+      <Image width={24} height={24} style={styles.image} source={img} alt='poketype'/>
       <Text style={styles.text}>{type}</Text>
     </View>
   )

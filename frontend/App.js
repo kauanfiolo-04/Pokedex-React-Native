@@ -1,11 +1,11 @@
-import { NavigationContainer } from '@react-navigation/native'
-import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import HomeScreen from './screens/HomeScreen'
-import PokeScreen from './screens/PokeScreen'
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import HomeScreen from "./screens/HomeScreen";
+import PokeScreen from "./screens/PokeScreen";
 
-const Stack = createNativeStackNavigator()
+const Stack = createNativeStackNavigator();
 
-function App() {
+export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
@@ -13,7 +13,5 @@ function App() {
         <Stack.Screen name="Pokémon" component={PokeScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-  )
-}
-
-export default App
+  );
+};

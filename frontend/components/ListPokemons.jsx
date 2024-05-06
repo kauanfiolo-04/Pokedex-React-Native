@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { getPokemons } from "../loaders/getPokemons";
 import { searchMenuBarLoader } from "../loaders/searchBarLoader";
-import { View, StyleSheet, TextInput, FlatList } from "react-native";
+import { View, StyleSheet, TextInput, FlatList, ScrollView } from "react-native";
 import PokeCard from "./PokeCard";
 
 const ListPokemons = ({ limit, offset }) => {
@@ -67,7 +67,9 @@ const ListPokemons = ({ limit, offset }) => {
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
       /> */}
-      
+      <ScrollView style={styles.list}>
+        {pokemons.map(poke=>renderItems({item:poke})}
+      </ScrollView>
     </View>
   );
 };

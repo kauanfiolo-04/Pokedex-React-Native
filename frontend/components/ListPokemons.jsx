@@ -1,14 +1,17 @@
 import React, { useEffect, useState, useRef } from "react";
-import { getPokemons } from "../loaders/getPokemons";
-import { searchMenuBarLoader } from "../loaders/searchBarLoader";
 import { View, StyleSheet, TextInput, FlatList } from "react-native";
+import { getPokemons } from "loaders/getPokemons";
+import { searchMenuBarLoader } from "loaders/searchBarLoader";
 import PokeCard from "./PokeCard";
+import Loading from "./Loading";
 
-const ListPokemons = ({ limit, offset }) => {
+const ListPokemons = ({ Limit, Offset }) => {
   const [pokemons, setPokemons] = useState([]);
   const [search, setSearch]=useState("");
   const currentController=useRef(null);
   const standardPoke=useRef(null);
+  const [limit, setLimit]=useState(Limit);
+  const [offset, setOffset]=useState(Offset);
 
   const fetchData=async (valueInputed)=>{
     currentController.current = new AbortController();
@@ -53,20 +56,24 @@ const ListPokemons = ({ limit, offset }) => {
     </View>
   );
 
+  const renderInput=()=>(
+    <TextInput
+      value={search}
+      style={styles.searchArea}
+      placeholder="Type the Pokémon name or ID"
+      onChangeText={setSearch}
+    />
+  );
+
   return (
     <View style={styles.container}>
-      <TextInput
-        value={search}
-        style={styles.searchArea}
-        placeholder="Type the Pokémon name or ID"
-        keyboardType="default"
-        onChangeText={setSearch}
-      />
       <FlatList
         data={pokemons}
         renderItem={renderItem}
         keyExtractor={(item) => item.id.toString()}
         style={styles.list}
+        ListEmptyComponent={<Loading message={"Carregando Pokemons..."}/>}
+        ListHeaderComponent={renderInput}
       />
     </View>
   );
@@ -87,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   list: {
-    /* flex: 1, */
+    // flex: 1,
     width: "100%",
   },
   item: {

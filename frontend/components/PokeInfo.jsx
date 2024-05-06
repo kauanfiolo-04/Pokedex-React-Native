@@ -1,7 +1,8 @@
 import React from "react";
 import { Text, Image, View, StyleSheet } from "react-native";
+import TypeInfo from 'components/TypeInfo.jsx'
 
-const PokeCard = ({ id, name, types, img, pokeScreen }) => {
+const PokeInfo = ({ id, name, types, img, ...props }) => {
   return (
     <View style={styles.card}>
       {(img.gif || img.url) && (
@@ -9,18 +10,29 @@ const PokeCard = ({ id, name, types, img, pokeScreen }) => {
           <Image style={styles.image} source={{ uri: img.gif || img.url }} />
         </View>
       )}
-      {/* <View style={styles.infoContainer}>
-        <Text style={styles.name}>{name}</Text>
-        {types.length > 0 && (
-          <View style={styles.typesContainer}>
-            {types.map((type, index) => (
-              <TypeInfo type={type.type.name} key={index} />
-            ))}
-          </View>
-        )}
-      </View> */}
       <View style={styles.idContainer}>
-        <Text style={styles.id}>{id.toString().padStart(3, "0")}</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.nameAndTypes}>
+            <Text style={styles.id}>#{id.toString().padStart(3, "0")}</Text>
+
+            <Text style={styles.name}>{name}</Text>
+          </View>
+
+          <View style={styles.typeLabel}>
+            <Text style={{fontSize:20}}>Type</Text>
+            {types.length > 0 && (
+              <View style={styles.typesContainer}>
+                {types.map((type, index) => (
+                  <TypeInfo type={type.type.name} key={index} />
+                ))}
+              </View>
+            )}
+          </View>
+        </View>
+      </View>
+
+      <View>
+        
       </View>
     </View>
   );
@@ -28,39 +40,39 @@ const PokeCard = ({ id, name, types, img, pokeScreen }) => {
 
 const styles = StyleSheet.create({
   card: {
+    color: "#7c7c7c",
     flexDirection: "column",
-    paddingHorizontal: 5,
+    padding: 5,
     justifyContent: "center",
     alignItems: "center",
-    width: "98%",
-    marginLeft: 5,
-    marginRight: 10,
+    width: "100%",
     backgroundColor: "white",
     borderRadius: 10,
     marginVertical: 5,
-    paddingVertical: 50,
-    height: "90%",
+    height: "auto",
     borderColor: "black",
     borderWidth: 1, // Defina a largura da borda conforme necessário
     borderStyle: "solid", // Especifique o estilo da borda, neste caso, sólido
     borderRadius: 10
   },
   imageContainer: {
-    paddingHorizontal: 30,
-
+    marginHorizontal: "auto",
+    marginTop: 15
   },
   image: {
     width: 125,
     height: 125,
   },
   infoContainer: {
-    flex: 2,
+    width: "100%",
+    display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
     alignItems: "flex-start",
   },
   name: {
-    fontSize: 18, // Adapte para responsividade se necessário
+    fontWeight: "700",
+    fontSize: 30, // Adapte para responsividade se necessário
     textTransform: "capitalize",
   },
   typesContainer: {
@@ -68,16 +80,26 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   idContainer: {
-    flex: 1,
+    display: "flex",
     alignItems: "flex-end",
     marginTop: 50,
     width: "100%",
   },
   id: {
     fontSize: 24, // Adapte conforme necessário
-    paddingHorizontal: 30,
-    color: "#7c7c7c"
   },
+  nameAndTypes:{
+    width: "100%",
+    display: "flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
+  },
+  typeLabel:{
+    display: "flex",
+    flexDirection: "column",
+    gap: 2
+  }
 });
 
-export default PokeCard;
+export default PokeInfo;

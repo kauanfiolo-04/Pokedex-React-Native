@@ -1,8 +1,6 @@
 import { Button, Text, View } from 'react-native'
-import { getPokemon } from '../loaders/getPokemon'
-import { useState, useEffect } from 'react'
-import ListPokemons from '../components/ListPokemons'
-import PokeCard from '../components/PokeCard'
+import { useState } from 'react'
+import ListPokemons from 'components/ListPokemons'
 
 const HomeScreen=({navigation})=>{
   const [limit, setLimit]=useState(6)
@@ -10,13 +8,7 @@ const HomeScreen=({navigation})=>{
 
   return(
     <View>
-      {/* <Button
-        title="go to pokeScreen"
-        onPress={()=>navigation.navigate('Poke')}
-      /> */}
-
       <ListPokemons limit={limit} offset={offset} />
-
     </View>
   )
 }

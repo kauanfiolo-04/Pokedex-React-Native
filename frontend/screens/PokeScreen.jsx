@@ -1,4 +1,4 @@
-import { Button, Text, View, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import PokeInfo from "components/PokeInfo";
 import { useEffect, useState } from "react";
 import { getPokemon } from "loaders/getPokemon";

@@ -3,6 +3,5 @@ export const getPokemon= async (term)=>{
   
   console.log('Fetching: '+url)
   const data=await fetch(url).then(r=>r.json()).catch(error=>console.error(error))
-  // console.log(data)
   return data
 }

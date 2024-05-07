@@ -1,5 +1,4 @@
-import { Button, Text, View } from 'react-native'
-import { useState } from 'react'
+import { View } from 'react-native'
 import ListPokemons from 'components/ListPokemons'
 
 const HomeScreen=({navigation})=>{

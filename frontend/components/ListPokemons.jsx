@@ -28,9 +28,8 @@ const ListPokemons = ({ Limit, Offset }) => {
         setPokemons(standardPoke.current);
         setDisablePagination(false);
       }
-      currentController.current = null; // Limpa a referência após a conclusão
+      currentController.current = null; 
     } catch (error) {
-        // Verificar se o erro é um erro de aborto
         if (error.name === 'AbortError') {
           console.log('Fetch foi cancelado');
         } else {
@@ -62,7 +61,6 @@ const ListPokemons = ({ Limit, Offset }) => {
   },[pagination]);
 
   useEffect(()=>{
-    // passsando lowercase pois o celular sempre deixa a primeira letra minuscula fazendo com q de errado a pesquisa
     search!=='' ? fetchData(search.toLowerCase()) : setPokemons(standardPoke.current);
   },[search]);
 
@@ -93,7 +91,7 @@ const ListPokemons = ({ Limit, Offset }) => {
       <TextInput
         value={search}
         style={styles.searchArea}
-        placeholder="Type the Pokémon name or ID"
+        placeholder="Digite o nome do Pokémon"
         onChangeText={setSearch}
       />
 

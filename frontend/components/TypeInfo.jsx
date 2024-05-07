@@ -56,25 +56,25 @@ const TypeInfo=({type})=>{
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 4, // Equivalente a 'px-1' do Tailwind
+    paddingHorizontal: 4,
     display: 'flex',
-    flexDirection: 'row', // Padrão para 'flex', mas explicitamente para claridade
+    flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderRadius: 9999, // 'rounded-full'
-    marginVertical: 2, // Aproximadamente 'my-1'
-    backgroundColor: '#777', // Cor de fundo padrão
+    borderRadius: 9999,
+    marginVertical: 2,
+    backgroundColor: '#777', 
   },
   image: {
-    height: 16, // Altura para 'h-[16px]' e 'w-[16px]'
-    width: 16, // Largura para 'h-[16px]' e 'w-[16px]'
-    margin: 4, // 'my-1' aplicado ao Image, considerando que 'm' aplica para todas as direções
+    height: 16, 
+    width: 16, 
+    margin: 4, 
   },
   text: {
-    marginHorizontal: 4, // 'mx-1'
-    fontSize: 12, // 'text-xs'
-    fontWeight: 'bold', // 'font-bold'
-    color: '#ffffff', // 'text-white'
+    marginHorizontal: 4,
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#ffffff',
   }
 })
 

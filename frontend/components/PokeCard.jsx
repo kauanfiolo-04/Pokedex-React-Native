@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems:'center',
-    fontSize: 18, // Adapte para responsividade se necessário
+    fontSize: 18,
     textTransform: 'capitalize',
   },
   typesContainer: {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   id: {
-    fontSize: 24, // Adapte conforme necessário
+    fontSize: 24,
     paddingHorizontal: 30,
     color: "#7c7c7c"
   },

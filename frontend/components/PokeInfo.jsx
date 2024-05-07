@@ -30,10 +30,6 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
           </View>
         </View>
       </View>
-
-      <View>
-        
-      </View>
     </View>
   );
 };
@@ -51,8 +47,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     height: "auto",
     borderColor: "black",
-    borderWidth: 1, // Defina a largura da borda conforme necessário
-    borderStyle: "solid", // Especifique o estilo da borda, neste caso, sólido
+    borderWidth: 1, 
+    borderStyle: "solid", 
     borderRadius: 10
   },
   imageContainer: {
@@ -72,8 +68,9 @@ const styles = StyleSheet.create({
   },
   name: {
     fontWeight: "700",
-    fontSize: 30, // Adapte para responsividade se necessário
+    fontSize: 30,
     textTransform: "capitalize",
+    paddingBottom: 30
   },
   typesContainer: {
     flexDirection: "row",
@@ -86,19 +83,22 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   id: {
-    fontSize: 24, // Adapte conforme necessário
+    fontSize: 24,
   },
   nameAndTypes:{
     width: "100%",
     display: "flex",
-    flexDirection:"row",
+    flexDirection:"row-reverse",
     justifyContent:"space-between",
-    alignItems:"center"
+    alignItems:"center",
+    paddingHorizontal: 15
   },
   typeLabel:{
     display: "flex",
     flexDirection: "column",
-    gap: 2
+    gap: 2,
+    paddingBottom: 15,
+    paddingHorizontal: 15
   }
 });
 

@@ -5,7 +5,6 @@ export const getPokemons=async(limit, offset)=>{
   console.log('Fetching:'+ url)
   const pokemons=await fetch(url)
     .then(r=>r.json()).then(data=>data.results).catch(err=>console.error(err)) ?? []
-    // console.log(pokemons)
   const finalPokemons=[]
 
   for(const poke of pokemons){

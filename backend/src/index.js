@@ -14,7 +14,7 @@ const Poke = mongoose.model('Poke',{
   pokeTypes:Array.of(String)
 })
 
-app.post('/', async(req,res)=>{
+const postCallback=async(req,res)=>{
   const body=req.body
   
   const poke = new Poke({
@@ -22,11 +22,17 @@ app.post('/', async(req,res)=>{
     pokeName:body.pokeName,
     pokeTypes:body.pokeTypes
   })
+
+  const AlreadyExists=await Poke.findOne({pokeId:body.pokeId})
   
-  await poke.save()
+  if(!AlreadyExists){
+    await poke.save()
+  }
   
   return res.send(poke)
-})
+}
+
+app.post('/', async (req,res)=> await postCallback(req,res))
 
 app.delete('/:pokeId', async (req,res)=>{
   try{

@@ -3,12 +3,9 @@ import { useState } from 'react'
 import ListPokemons from 'components/ListPokemons'
 
 const HomeScreen=({navigation})=>{
-  const [limit, setLimit]=useState(6)
-  const [offset, setOffset]=useState(0)
-
   return(
     <View>
-      <ListPokemons limit={limit} offset={offset} />
+      <ListPokemons limit={20} offset={0} />
     </View>
   )
 }

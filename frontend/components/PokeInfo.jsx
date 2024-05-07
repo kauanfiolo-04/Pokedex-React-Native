@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Image, View, StyleSheet } from "react-native";
 import TypeInfo from 'components/TypeInfo.jsx'
+import PokeDescription from "./PokeDescription";
 
 const PokeInfo = ({ id, name, types, img, ...props }) => {
   return (
@@ -17,7 +18,6 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
 
             <Text style={styles.name}>{name}</Text>
           </View>
-
           <View style={styles.typeLabel}>
             <Text style={{fontSize:20}}>Type</Text>
             {types.length > 0 && (
@@ -29,6 +29,9 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
             )}
           </View>
         </View>
+      </View>
+      <View>
+          <PokeDescription style={styles.name} pokeName={name}/>
       </View>
     </View>
   );

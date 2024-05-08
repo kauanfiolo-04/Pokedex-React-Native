@@ -9,7 +9,9 @@ const PokeDescription=({style, pokeName})=>{
     useEffect(() => {
         getDescription(pokeName)
         .then((res)=>{
-            setDesctiption(res.flavor_text_entries[0].flavor_text)
+            setDesctiption(res.flavor_text_entries[0].flavor_text);
+            setDesctiption(description.replace(/\n/g, ' '))
+            console.log(description)
         }).catch((err)=>{
             console.log(err)
         })

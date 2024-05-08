@@ -1,12 +1,11 @@
 import { View, Text, StyleSheet } from 'react-native'
-import { getDescription } from '../loaders/getDescription'
+import  getDescription  from 'loaders/getDescription'
 import { useEffect, useState } from 'react'
 
 
 
-const PokeDescription=({pokeName})=>{
+const PokeDescription=({style, pokeName})=>{
     const [description, setDesctiption] = useState('')
-
     useEffect(() => {
         getDescription(pokeName)
         .then((res)=>{
@@ -14,10 +13,9 @@ const PokeDescription=({pokeName})=>{
         }).catch((err)=>{
             console.log(err)
         })
-    },[pokeName])   
-
+    },[pokeName])
     return(
-        <View>
+        <View style={style}>
             <Text>
                 {description}
             </Text>

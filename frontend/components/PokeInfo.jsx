@@ -30,8 +30,8 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
           </View>
         </View>
       </View>
-      <View>
-          <PokeDescription style={styles.name} pokeName={name}/>
+      <View style={styles.descriptionContainer}>
+          <PokeDescription style={styles.description} pokeName={name}/>
       </View>
     </View>
   );
@@ -100,6 +100,11 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap: 2,
+    paddingBottom: 15,
+    paddingHorizontal: 15
+  },
+  descriptionContainer:{
+    width: '100%',
     paddingBottom: 15,
     paddingHorizontal: 15
   }

@@ -66,6 +66,17 @@ app.get('/', async (req, res)=>{
   return res.send(pokes)
 })
 
+app.get('/getFavorite/:pokeId',async (req,res)=>{
+  try{
+    const AlreadyExists=await Poke.findOne({pokeId:req.params.pokeId})
+
+    return res.send({AlreadyExists})
+  }catch(error){
+    console.error(error)
+    return res.sendStatus(404)
+  }
+})
+
 app.listen(port, ()=>{
   mongoose.connect(process.env.MONGODB_URI)
   console.log(`App Running in port...${port}`)

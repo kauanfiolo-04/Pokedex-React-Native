@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, FlatList, Button, Text } from "react-native";
-import { getPokemons } from "loaders/getPokemons";
-import { searchMenuBarLoader } from "loaders/searchBarLoader";
+import getPokemons from "loaders/getPokemons";
+import searchMenuBarLoader from "loaders/searchBarLoader";
 import PokeCard from "./PokeCard";
 import Loading from "./Loading";
 

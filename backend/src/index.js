@@ -7,7 +7,6 @@ app.use(express.json())
 const port=3000
 config()
 
-
 const Poke = mongoose.model('Poke',{
   pokeId:String,
   pokeName:String,
@@ -23,13 +22,20 @@ const postCallback=async(req,res)=>{
     pokeTypes:body.pokeTypes
   })
 
-  const AlreadyExists=await Poke.findOne({pokeId:body.pokeId})
+  try{
+    const AlreadyExists=await Poke.findOne({pokeId:body.pokeId})
+    
+    if(!AlreadyExists){
+      await poke.save()
+    }
   
-  if(!AlreadyExists){
-    await poke.save()
+    res.sendStatus(200)
+    return res.send(poke)
+
+  }catch(error){
+    console.error(error)
+    return res.sendStatus(404)
   }
-  
-  return res.send(poke)
 }
 
 app.post('/', async (req,res)=> await postCallback(req,res))
@@ -37,6 +43,7 @@ app.post('/', async (req,res)=> await postCallback(req,res))
 app.delete('/:pokeId', async (req,res)=>{
   try{
     const poke=await Poke.findOneAndDelete({pokeId:req.params.pokeId})
+    res.sendStatus(200)
     return res.send(poke)
   }catch(error){
     console.error(error)
@@ -54,6 +61,7 @@ app.put('/:pokeId', async (req,res)=>{
     body.pokeTypes && (pokeUpdated[pokeTypes]=body.pokeTypes)
 
     const poke=await Poke.findOneAndReplace({pokeId:req.params.pokeId}, pokeUpdated)
+    res.sendStatus(200)
     return res.send(poke)
   }catch(error){
     console.error(error)
@@ -69,7 +77,7 @@ app.get('/', async (req, res)=>{
 app.get('/getFavorite/:pokeId',async (req,res)=>{
   try{
     const AlreadyExists=await Poke.findOne({pokeId:req.params.pokeId})
-
+    res.sendStatus(200)
     return res.send({AlreadyExists})
   }catch(error){
     console.error(error)

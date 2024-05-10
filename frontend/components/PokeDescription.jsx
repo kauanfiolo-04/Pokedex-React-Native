@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text } from "react-native";
 import getDescription from "loaders/getDescription";
 import { useEffect, useState } from "react";
 
@@ -16,6 +16,7 @@ const PokeDescription = ({ style, pokeName }) => {
         console.log(err);
       });
   }, [pokeName]);
+
   return (
     <View style={style}>
       <Text>{description}</Text>

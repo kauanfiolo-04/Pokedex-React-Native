@@ -1,9 +1,11 @@
 import React from "react";
 import { Text, Image, View, StyleSheet } from "react-native";
-import TypeInfo from 'components/TypeInfo.jsx'
-import PokeDescription from "./PokeDescription";
+import TypeInfo from "components/TypeInfo.jsx";
+import PokeDescription from "components/PokeDescription";
+import FavoriteButton from "components/FavoriteButton";
 
 const PokeInfo = ({ id, name, types, img, ...props }) => {
+
   return (
     <View style={styles.card}>
       {(img.gif || img.url) && (
@@ -32,6 +34,7 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
       </View>
       <View style={styles.descriptionContainer}>
           <PokeDescription style={styles.description} pokeName={name}/>
+          <FavoriteButton pokeId={id} pokeName={name} pokeTypes={types} />
       </View>
     </View>
   );
@@ -107,7 +110,7 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingBottom: 15,
     paddingHorizontal: 15
-  }
+  },
 });
 
 export default PokeInfo;

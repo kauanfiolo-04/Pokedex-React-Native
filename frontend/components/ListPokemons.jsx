@@ -84,7 +84,7 @@ const ListPokemons = ({ Limit, Offset }) => {
       <Text>{pagination+1}</Text>
       <Button title="next" onPress={handleNext}/>
     </View>
-  )
+  );
 
   return (
     <View style={styles.container}>

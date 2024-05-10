@@ -1,56 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { Text, Image, View, StyleSheet, TouchableOpacity } from "react-native";
+import React from "react";
+import { Text, Image, View, StyleSheet } from "react-native";
 import TypeInfo from "components/TypeInfo.jsx";
 import PokeDescription from "components/PokeDescription";
-import checkFavorite from  "loaders/checkFavorite.js";
-import setFavorite from "loaders/setFavorite";
+import FavoriteButton from "components/FavoriteButton";
 
 const PokeInfo = ({ id, name, types, img, ...props }) => {
-  const [isFavorite,setIsFavorite]=useState(false);
-
-  useEffect(()=>{
-    checkFavorite(id).then(res=>{
-      setIsFavorite(!(res.AlreadyExists===null));
-    }).catch(error=>console.log(error));
-  },[id]);
-
-  const FavoriteButton=({favorite})=>{
-
-    const handleFavorite=()=>{
-      setFavorite({
-        pokeId:id,
-        pokeName:name,
-        pokeTypes:types
-      }).then(r=>{
-        if(r) setIsFavorite(true)
-      })
-    }
-
-    console.log(favorite)
-    const favStyle={
-      button: {
-        width: 50,
-        height: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: '#FFF',
-        borderRadius: 25,
-        elevation: 3,
-        shadowOpacity: 0.3,
-        shadowRadius: 3,
-        shadowOffset: { width: 0, height: 2 },
-      },
-      text:{
-        color:'#000000'
-      }
-    }
-
-    return(
-      <TouchableOpacity style={favStyle.button}>
-        <Text style={favStyle.text}>{favorite ? "Favoritado" : "KKKKKK"}</Text>
-      </TouchableOpacity>
-    )   
-  };
 
   return (
     <View style={styles.card}>
@@ -80,7 +34,7 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
       </View>
       <View style={styles.descriptionContainer}>
           <PokeDescription style={styles.description} pokeName={name}/>
-          <FavoriteButton favorite={isFavorite}/>
+          <FavoriteButton pokeId={id} pokeName={name} pokeTypes={types} />
       </View>
     </View>
   );

@@ -5,36 +5,35 @@ import setFavorite from "loaders/setFavorite";
 import removeFavorite from "loaders/removeFavorite";
 
 const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
-  const [favoritado, setFavoritado]=useState('Favoritar');
+  const [favoritado, setFavoritado]=useState(false);
 
   useEffect(()=>{
     if(pokeId!==0){
-      checkFavorite(pokeId).then(res=>{
-        setFavoritado(!(res.AlreadyExists===null));
+      checkFavorite(pokeId)
+      .then(res=>{
+        setFavoritado(res.AlreadyExists);
       }).catch(error=>console.log(error));
     }
   },[pokeId]);
 
   const handleFavorite=()=>{
-    if(favoritado==='Favoritado'){
+    if(favoritado){
       removeFavorite(pokeId).then(r=>{
-        if(r) setFavoritado('Favoritar')
+        if(r) setFavoritado(false)
       }).catch(error=>console.error(error))
     }else{
-      console.log(pokeTypes.map(pokeType=>pokeType.type.name))
       setFavorite({
         pokeId,
         pokeName,
         pokeTypes
       }).then(r=>{
-        if(r) setFavoritado('Favoritado')
+        if(r) setFavoritado(true)
       }).catch(error=>console.error(error))
     }
   } 
 
   const favStyle={
     button: {
-      backgroundColor: favoritado ? '#dd1f26':'#01010101',
       width: "100%",
       height: 50,
       justifyContent: 'center',
@@ -52,8 +51,8 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
   }
 
   return(
-    <TouchableOpacity style={favStyle.button} onPress={handleFavorite}>
-      <Text style={favStyle.text}>{favoritado}</Text>
+    <TouchableOpacity style={{...favStyle.button, backgroundColor: favoritado ? '#dd1f26':'#01010101'}} onPress={handleFavorite}>
+      <Text style={favStyle.text}>{favoritado ? "Favoritado" : "Favoritar"}</Text>
     </TouchableOpacity>
   )   
 };

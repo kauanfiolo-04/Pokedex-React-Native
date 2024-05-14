@@ -1,20 +1,23 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, FlatList, Button, Text } from "react-native";
 import getPokemons from "loaders/getPokemons";
+import getPokemon from "loaders/getPokemon";
 import searchMenuBarLoader from "loaders/searchBarLoader";
+import getFavorites from "loaders/getFavorites";
 import PokeCard from "./PokeCard";
 import Loading from "./Loading";
 
 const ListPokemons = ({ Limit, Offset }) => {
   const [pokemons, setPokemons] = useState([]);
   const [search, setSearch]=useState("");
-  const currentController=useRef(null);
-  const standardPoke=useRef(null);
   const [limit, setLimit]=useState(Limit);
   const [offset, setOffset]=useState(Offset);
   const [pagination, setPagination]=useState(0);
-  const paginationRef=useRef(null);
   const [disablePagination, setDisablePagination]=useState(false);
+
+  const currentController=useRef(null);
+  const standardPoke=useRef(null);
+  const paginationRef=useRef(null);
 
   const fetchData=async (valueInputed)=>{
     currentController.current = new AbortController();
@@ -38,6 +41,20 @@ const ListPokemons = ({ Limit, Offset }) => {
     }
   }
 
+  const fetchFiltered=async()=>{
+    const data = await getFavorites();
+    console.log(data);
+    if(data){
+      const pokeCards=[];
+      for(const poke of data){
+        const pokeCard=await getPokemon(poke.pokeId);
+        pokeCards.push(pokeCard);
+      }
+      setDisablePagination(true);
+      setPokemons(pokeCards);
+    }
+  }
+
   const handlePrev=(event)=>{
     event.preventDefault();
     setPagination(prevState=>prevState-1);
@@ -46,6 +63,11 @@ const ListPokemons = ({ Limit, Offset }) => {
   const handleNext=(event)=>{
     event.preventDefault();
     setPagination(prevState=>prevState+1);
+  };
+
+  const handleFilter=(event)=>{
+    event.preventDefault();
+    fetchFiltered();
   };
 
   useEffect(() => {
@@ -88,12 +110,15 @@ const ListPokemons = ({ Limit, Offset }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        value={search}
-        style={styles.searchArea}
-        placeholder="Digite o nome do Pokémon"
-        onChangeText={setSearch}
-      />
+      <View style={styles.barContainer}>
+        <Button title="Favs" onPress={handleFilter}/>
+        <TextInput
+          value={search}
+          style={styles.searchArea}
+          placeholder="Digite o nome do Pokémon"
+          onChangeText={setSearch}
+        />
+      </View>
 
       <FlatList
         data={pokemons}
@@ -137,6 +162,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 4,
     height: "auto"
+  },
+  barContainer:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
   }
 });
 

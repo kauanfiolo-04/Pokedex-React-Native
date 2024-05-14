@@ -27,15 +27,15 @@ const Poke = mongoose.model('Poke',{
 const postCallback = async (req, res) => {
   const { pokeId, pokeName, pokeTypes } = req.body
  
-  if (pokeId===undefined) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
-  }
-  if (pokeName===undefined) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
-  }
-  if (pokeTypes===undefined) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
-  }
+  // if (pokeId===undefined) {
+  //   return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
+  // }
+  // if (pokeName===undefined) {
+  //   return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
+  // }
+  // if (pokeTypes===undefined) {
+  //   return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
+  // }
 
   const poke = new Poke({
     pokeId,
@@ -82,7 +82,7 @@ app.put('/:pokeId', async (req,res)=>{
     body.pokeName ? (newPoke.pokeName = body.pokeName) : res.status(400).send({
       message:`Erro: propriedade "pokeName" necessária!`
     })
-    body.pokeType ? (newPoke.pokeType = body.pokeType) : res.status(400).send({
+    body.pokeTypes ? (newPoke.pokeTypes = body.pokeTypes) : res.status(400).send({
       message:`Erro: propriedade "pokeType" necessária!`
     })
 

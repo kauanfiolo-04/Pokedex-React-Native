@@ -25,22 +25,22 @@ const Poke = mongoose.model('Poke',{
 
 
 const postCallback = async (req, res) => {
-  const { pokeId, pokeName, pokeType } = req.body
+  const { pokeId, pokeName, pokeTypes } = req.body
  
-  if (!pokeId) {
+  if (pokeId===undefined) {
     return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
   }
-  if (!pokeName) {
+  if (pokeName===undefined) {
     return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
   }
-  if (!pokeType) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeType' necessária!" })
+  if (pokeTypes===undefined) {
+    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
   }
 
   const poke = new Poke({
     pokeId,
     pokeName,
-    pokeTypes: pokeType
+    pokeTypes
   })
 
   try {
@@ -103,7 +103,6 @@ app.get('/', async (req, res)=>{
 app.get('/getFavorite/:pokeId',async (req,res)=>{
   try{
     const AlreadyExists=await Poke.findOne({pokeId:req.params.pokeId})
-    console.log(AlreadyExists)
     return res.status(200).send({AlreadyExists:AlreadyExists ? true : false})
   }catch(error){
     console.error(error)

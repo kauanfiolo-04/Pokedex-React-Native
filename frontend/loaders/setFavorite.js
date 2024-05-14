@@ -10,7 +10,10 @@ const setFavorite=async(poke)=>{
     method:"post",
     body:JSON.stringify({
       pokeId, pokeName, pokeTypes
-    })
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
   }).then(r=>{
     if(r.status===201){
       return r.json();

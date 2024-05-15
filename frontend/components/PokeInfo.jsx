@@ -111,6 +111,9 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     paddingHorizontal: 15
   },
+  description:{
+    paddingBottom: 15 
+  }
 });
 
 export default PokeInfo;

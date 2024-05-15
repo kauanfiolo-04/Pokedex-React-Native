@@ -51,7 +51,7 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
   }
 
   return(
-    <TouchableOpacity style={{...favStyle.button, backgroundColor: favoritado ? '#dd1f26':'#01010101'}} onPress={handleFavorite}>
+    <TouchableOpacity style={{...favStyle.button, backgroundColor: favoritado ? '#19ff00':'#ff0000'}} onPress={handleFavorite}>
       <Text style={favStyle.text}>{favoritado ? "Favoritado" : "Favoritar"}</Text>
     </TouchableOpacity>
   )   

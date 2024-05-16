@@ -34,8 +34,8 @@ const PokeInfo = ({ id, name, types, img, ...props }) => {
       </View>
       <View style={styles.descriptionContainer}>
           <PokeDescription style={styles.description} pokeName={name}/>
-          <FavoriteButton pokeId={id.toString()} pokeName={name} pokeTypes={types.map(tipo=>tipo.type.name)} />
       </View>
+      <FavoriteButton pokeId={id.toString()} pokeName={name} pokeTypes={types.map(tipo=>tipo.type.name)} />
     </View>
   );
 };

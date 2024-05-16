@@ -1,19 +1,12 @@
 import React, { useEffect, useState, useRef } from "react";
-import {
-  View,
-  StyleSheet,
-  TextInput,
-  FlatList,
-  Button,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, TextInput, FlatList, Button, Text, TouchableOpacity, Image} from "react-native";
 import getPokemons from "loaders/getPokemons";
 import getPokemon from "loaders/getPokemon";
 import searchMenuBarLoader from "loaders/searchBarLoader";
 import getFavorites from "loaders/getFavorites";
 import PokeCard from "./PokeCard";
 import Loading from "./Loading";
+import Svg, { Path } from "react-native-svg";
 
 const ListPokemons = ({ Limit, Offset }) => {
   const [pokemons, setPokemons] = useState([]);
@@ -22,9 +15,10 @@ const ListPokemons = ({ Limit, Offset }) => {
   const [offset, setOffset] = useState(Offset);
   const [pagination, setPagination] = useState(0);
   const [disablePagination, setDisablePagination] = useState(false);
+  const [filtered, setFiltered] = useState(false);
 
   const currentController = useRef(null);
-  const standardPoke = useRef(null);
+  const standardPokes = useRef(null);
   const paginationRef = useRef(null);
 
   const fetchData = async (valueInputed) => {
@@ -39,7 +33,7 @@ const ListPokemons = ({ Limit, Offset }) => {
         setPokemons([poke]);
         setDisablePagination(true);
       } else {
-        setPokemons(standardPoke.current);
+        setPokemons(standardPokes.current);
         setDisablePagination(false);
       }
       currentController.current = null;
@@ -53,6 +47,8 @@ const ListPokemons = ({ Limit, Offset }) => {
   };
 
   const fetchFiltered = async () => {
+    setPokemons([]);
+    setDisablePagination(true);
     const data = await getFavorites();
     console.log(data);
     if (data) {
@@ -61,8 +57,11 @@ const ListPokemons = ({ Limit, Offset }) => {
         const pokeCard = await getPokemon(poke.pokeId);
         pokeCards.push(pokeCard);
       }
-      setDisablePagination(true);
       setPokemons(pokeCards);
+      setFiltered(true);
+    }else{
+      setDisablePagination(false);
+      setPokemons(standardPokes.current);
     }
   };
 
@@ -78,14 +77,20 @@ const ListPokemons = ({ Limit, Offset }) => {
 
   const handleFilter = (event) => {
     event.preventDefault();
-    fetchFiltered();
+    if(filtered){
+      setPokemons(standardPokes.current);
+      setDisablePagination(false);
+      setFiltered(false);
+    }else{
+      fetchFiltered();
+    }
   };
 
   useEffect(() => {
     setPokemons([]);
     getPokemons(limit, offset).then((r) => {
       setPokemons(r);
-      if (standardPoke.current === null) standardPoke.current = r;
+      if (standardPokes.current === null) standardPokes.current = r;
     });
   }, [limit, offset]);
 
@@ -96,7 +101,7 @@ const ListPokemons = ({ Limit, Offset }) => {
   useEffect(() => {
     search !== ""
       ? fetchData(search.toLowerCase())
-      : setPokemons(standardPoke.current);
+      : setPokemons(standardPokes.current);
   }, [search]);
 
   const renderItem = ({ item }) => (
@@ -131,8 +136,10 @@ const ListPokemons = ({ Limit, Offset }) => {
     <View style={styles.container}>
       <View style={styles.barContainer}>
         <View style={styles.favButtonView}>
-          <TouchableOpacity onPress={handleFilter} style={styles.favButton}>
-            <Text style={styles.favButtonText}>Favs</Text>
+          <TouchableOpacity onPress={handleFilter} activeOpacity={filtered ? 1 : 0.2} style={{...styles.favButton, opacity:filtered ? 0.2 : 1}}>
+            <Svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <Path d="M12 2L14.39 8.63L21.5 9.27L16 13.14L17.88 19.94L12 16.41L6.12 19.94L8 13.14L2.5 9.27L9.61 8.63L12 2Z" fill="black"/>
+            </Svg>
           </TouchableOpacity>
         </View>
         <TextInput
@@ -197,17 +204,16 @@ const styles = StyleSheet.create({
     marginLeft: 5,
   },
   favButton: {
+    height: 40,
+    display:"flex",
+    justifyContent:"center",
+    alignItems:"center",
     backgroundColor: "#ffd000",
-    padding: 10,
     borderRadius: 5,
     borderWidth: 1,
     borderColor: "#ffd000",
-    borderRadius: 5,
-    alignItems: 'center'
-  },
-  favButtonText: {
-    color: "white",
-  },
+    borderRadius: 5
+  }
 });
 
 export default ListPokemons;

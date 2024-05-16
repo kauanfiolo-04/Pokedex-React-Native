@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { TouchableOpacity, Text } from "react-native";
+import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import checkFavorite from  "loaders/checkFavorite.js";
 import setFavorite from "loaders/setFavorite";
 import removeFavorite from "loaders/removeFavorite";
@@ -19,39 +19,41 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
   const handleFavorite=()=>{
     if(favoritado){
       removeFavorite(pokeId).then(r=>{
-        if(r) setFavoritado(false)
-      }).catch(error=>console.error(error))
+        console.log(r);
+        if(r) setFavoritado(false);
+      }).catch(error=>console.error(error));
     }else{
       setFavorite({
         pokeId,
         pokeName,
         pokeTypes
       }).then(r=>{
-        if(r) setFavoritado(true)
-      }).catch(error=>console.error(error))
+        console.log(r);
+        if(r) setFavoritado(true);
+      }).catch(error=>console.error(error));
     }
   } 
 
-  const favStyle={
+  const favStyle=StyleSheet.create({
     button: {
       width: "100%",
       height: 50,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: '#FFF',
+      marginVertical: 15,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: favoritado ? "#ffd000":"#fff",
       borderRadius: 25,
-      elevation: 3,
-      shadowOpacity: 0.3,
-      shadowRadius: 3,
-      shadowOffset: { width: 0, height: 2 },
+      elevation: 5
     },
     text:{
-      color:'#000000'
+      color:"#000",
+      fontWeight:"800",
+      fontSize:16
     }
-  }
+  });
 
   return(
-    <TouchableOpacity style={{...favStyle.button, backgroundColor: favoritado ? '#19ff00':'#ff0000'}} onPress={handleFavorite}>
+    <TouchableOpacity style={favStyle.button} onPress={handleFavorite}>
       <Text style={favStyle.text}>{favoritado ? "Favoritado" : "Favoritar"}</Text>
     </TouchableOpacity>
   )   

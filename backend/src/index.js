@@ -1,11 +1,12 @@
-import {config} from 'dotenv'
-import express from 'express'
-import cors from 'cors'
-import mongoose from 'mongoose'
+import express from 'express';
+import cors from 'cors';
+import routes from './routers/routes.js';
+import connection from './database/connection.js';
+import Tables from './database/Tables.js';
 
-const app=express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
 app.use(cors({
   origin: '*',  // Permite todas as origens
@@ -13,105 +14,17 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
 
-const port=3000
+const port = 3000;
 
-config()
+Tables.init(connection);
 
-const Poke = mongoose.model('Poke',{
-  pokeId:String,
-  pokeName:String,
-  pokeTypes:Array.of(String)
-})
+routes(app);
 
-
-const postCallback = async (req, res) => {
-  const { pokeId, pokeName, pokeTypes } = req.body
- 
-  if (!pokeId) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
-  }
-  if (!pokeName) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
-  }
-  if (!pokeTypes) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
+app.listen(port, (error) => {
+  if(error){
+    console.error(error);
+    return;
   }
 
-  const poke = new Poke({
-    pokeId,
-    pokeName,
-    pokeTypes: pokeTypes
-  })
-
-  try {
-    const alreadyExists = await Poke.findOne({ pokeId })
-    if (alreadyExists) {
-      return res.status(409).send({ message: "Erro: Pokémon já existe!" })
-    }
-
-    await poke.save()
-    return res.status(201).send(poke)
-  } catch (error) {
-    console.error(error)
-    return res.sendStatus(500)
-  }
-}
-
-app.post('/', async (req,res)=> await postCallback(req,res))
-
-app.delete('/:pokeId', async (req,res)=>{
-  try{
-    const poke=await Poke.findOneAndDelete({pokeId:req.params.pokeId})
-    
-    return res.status(200).send(poke)
-  }catch(error){
-    console.error(error)
-    return res.status(404)
-  }
-})
-
-app.put('/:pokeId', async (req,res)=>{
-  try{
-    const body=req.body
-
-    const newPoke={}
-
-    body.pokeId ? (newPoke.pokeId = body.pokeId) : res.status(400).send({
-      message:`Erro: propriedade "pokeId" necessária!`
-    })
-    body.pokeName ? (newPoke.pokeName = body.pokeName) : res.status(400).send({
-      message:`Erro: propriedade "pokeName" necessária!`
-    })
-    body.pokeTypes ? (newPoke.pokeTypes = body.pokeTypes) : res.status(400).send({
-      message:`Erro: propriedade "pokeType" necessária!`
-    })
-
-    const poke=await Poke.findOneAndReplace({pokeId:req.params.pokeId}, newPoke)
-
-    return res.status(200).send(poke)
-  }catch(error){
-    console.error(error)
-    return res.status(404)
-  }
-})
-
-app.get('/', async (req, res)=>{
-  const pokes= await Poke.find()
-  return res.status(200).send(pokes)
-})
-
-app.get('/getFavorite/:pokeId',async (req,res)=>{
-  try{
-    const AlreadyExists=await Poke.findOne({pokeId:req.params.pokeId})
-    return res.status(200).send({AlreadyExists:AlreadyExists ? true : false})
-  }catch(error){
-    console.error(error)
-    return res.status(404)
-  }
-})
-
-app.listen(port, ()=>{
-  mongoose.connect(process.env.MONGODB_URI)
-  console.log(`App Running in port...${port}`)
-})
-
+  console.log(`Rodando no: localhost:${port}`);
+});

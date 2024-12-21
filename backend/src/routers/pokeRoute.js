@@ -1,23 +1,38 @@
 import { Router } from 'express';
+import pokemonController from '../controllers/pokemonController.js';
 
 const router = Router();
 
 router.post('/poke/', async (req,res)=> {
-  try{
-    const poke = 'Criando...';
+  const { pokeId, pokeName, pokeTypes } = req.body
 
-    return res.status(200).send(poke);
-  }catch(error){
-    console.error(error);
-    return res.status(404);
+  if (!pokeId) {
+    return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
+  }
+  if (!pokeName) {
+    return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
+  }
+  if (!pokeTypes) {
+    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
+  }
+
+  try {
+    const alreadyExists = await pokemonController.getFavorited();
+    if (alreadyExists) {
+      return res.status(409).send({ message: "Erro: Pokémon já existe!" })
+    }
+
+    const poke = await pokemonController.criar();
+    return res.status(201).send(poke);
+  } catch (error) {
+    console.error(error)
+    return res.sendStatus(500)
   }
 });
 
 router.delete('/poke/:pokeId', async (req,res)=>{
   try{
-    const poke=
-    // await Poke.findOneAndDelete({pokeId:req.params.pokeId})
-    'Deletando...';
+    const poke = await pokemonController.delete(req.params.pokeId);
 
     return res.status(200).send(poke);
   }catch(error){
@@ -54,9 +69,7 @@ router.put('/poke/:pokeId', async (req,res)=>{
 })
 
 router.get('/poke/', async (req, res)=>{
-  const pokes =
-  // await Poke.find()
-  'Searching all..';
+  const pokes = await pokemonController.getAll();
   
   return res.status(200).send(pokes);
 })

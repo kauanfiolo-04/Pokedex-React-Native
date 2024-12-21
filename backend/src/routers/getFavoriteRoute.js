@@ -1,15 +1,16 @@
 import { Router } from 'express';
+import pokemonController from '../controllers/pokemonController.js';
 
 const router = Router();
 
-router.get('/getFavorite/:pokeId',async (req,res)=>{
+router.get('/getFavorited/:pokeId',async (req,res)=>{
+  const { pokeId } = req.params;
   try{
-    const AlreadyExists= true;
-    // await Poke.findOne({pokeId:req.params.pokeId})
-    return res.status(200).send({AlreadyExists:AlreadyExists ? true : false});
+    const alreadyExists = await pokemonController.getFavorited(pokeId);
+    return res.status(200).send({ alreadyExists : alreadyExists ? true : false });
   }catch(error){
     console.error(error);
-    return res.status(404);
+    return res.status(404).send(error.message);
   }
 })
 

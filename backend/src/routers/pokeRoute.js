@@ -3,30 +3,30 @@ import pokemonController from '../controllers/pokemonController.js';
 
 const router = Router();
 
-router.post('/poke/', async (req,res)=> {
-  const { pokeId, pokeName, pokeTypes } = req.body
+router.post('/poke', async (req,res)=> {
+  const { pokeId, pokeName, pokeTypes } = req.body;
 
   if (!pokeId) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" })
+    return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" });
   }
   if (!pokeName) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" })
+    return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" });
   }
   if (!pokeTypes) {
-    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" })
+    return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" });
   }
 
   try {
-    const alreadyExists = await pokemonController.getFavorited();
+    const alreadyExists = await pokemonController.getFavorited(pokeId);
     if (alreadyExists) {
       return res.status(409).send({ message: "Erro: Pokémon já existe!" })
     }
 
-    const poke = await pokemonController.criar();
+    const poke = await pokemonController.post({pokeId, pokeName, pokeTypes});
     return res.status(201).send(poke);
   } catch (error) {
     console.error(error)
-    return res.sendStatus(500)
+    return res.sendStatus(500).send(error.message);
   }
 });
 
@@ -37,41 +37,50 @@ router.delete('/poke/:pokeId', async (req,res)=>{
     return res.status(200).send(poke);
   }catch(error){
     console.error(error);
-    return res.status(404);
+    return res.status(404).send(error.message);
   }
 })
 
-router.put('/poke/:pokeId', async (req,res)=>{
-  try{
-    const body=req.body
+router.put('/poke/:pokeId', async (req, res) => {
+  try {
+    const { pokeId } = req.params;
+    const { pokeName, pokeTypes } = req.body;
 
-    const newPoke={}
+    if (!pokeId) {
+      return res.status(400).send({ message: "Erro: propriedade 'pokeId' necessária!" });
+    }
+    if (!pokeName) {
+      return res.status(400).send({ message: "Erro: propriedade 'pokeName' necessária!" });
+    }
+    if (!pokeTypes) {
+      return res.status(400).send({ message: "Erro: propriedade 'pokeTypes' necessária!" });
+    }
 
-    body.pokeId ? (newPoke.pokeId = body.pokeId) : res.status(400).send({
-      message:`Erro: propriedade "pokeId" necessária!`
-    })
-    body.pokeName ? (newPoke.pokeName = body.pokeName) : res.status(400).send({
-      message:`Erro: propriedade "pokeName" necessária!`
-    })
-    body.pokeTypes ? (newPoke.pokeTypes = body.pokeTypes) : res.status(400).send({
-      message:`Erro: propriedade "pokeType" necessária!`
-    })
+    const updatedPoke = await pokemonController.put({ pokeId, pokeName, pokeTypes });
 
-    const poke=
-    // await Poke.findOneAndReplace({pokeId:req.params.pokeId}, newPoke)
-    `atualizando o poke: ${JSON.stringify(newPoke)}`;
+    if (!updatedPoke.updated) {
+      return res.status(404).send({ message: "Pokémon não encontrado para atualizar." });
+    }
 
-    return res.status(200).send(poke);
-  }catch(error){
-    console.error(error);
-    return res.status(404);
+    return res.status(200).send({ 
+      message: "Pokémon atualizado com sucesso!", 
+      data: updatedPoke 
+    });
+  } catch (error) {
+    console.error('Erro ao atualizar Pokémon:', error);
+    return res.status(500).send({ message: "Erro interno no servidor", error: error.message });
   }
-})
+});
 
-router.get('/poke/', async (req, res)=>{
-  const pokes = await pokemonController.getAll();
+router.get('/poke', async (req, res)=>{
+  try {
+    const pokes = await pokemonController.getAll();
+    
+    return res.status(200).send(pokes);
+  } catch (err) {
+    return res.send(400).send(err.message);
+  }
   
-  return res.status(200).send(pokes);
 })
 
 export default router;

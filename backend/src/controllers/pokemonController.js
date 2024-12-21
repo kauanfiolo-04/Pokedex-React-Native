@@ -5,20 +5,20 @@ class PokemonController {
     return pokemonModel.getAll();
   }
 
-  create() {
-    return 'Criando pokemon...';
+  post(poke) {
+    return pokemonModel.post(poke);
   }
 
-  put(id) {
-    return 'Alterando pokemon de id: ' + id;
+  put(poke) {
+    return pokemonModel.put(poke);
   }
 
   delete(id) {
     return 'Apagando pokemon de id: ' + id;
   }
 
-  getFavorited(id) {
-    return `Averiguando se o pokemon de id: ${id}, foi favoritado...`
+  getFavorited(pokeId) {
+    return pokemonModel.getFavorited(pokeId);
   }
 }
 

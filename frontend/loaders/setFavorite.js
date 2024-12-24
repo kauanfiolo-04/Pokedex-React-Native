@@ -3,7 +3,7 @@ const setFavorite=async(poke)=>{
   console.log(JSON.stringify({
     pokeId, pokeName, pokeTypes
   }))
-  const url="https://pokedex-react-native.onrender.com/";
+  const url="pokedex-react-native.railway.internal/poke";
 
 
   return await fetch(url,{

@@ -11,7 +11,7 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
     if(pokeId!==0){
       checkFavorite(pokeId)
       .then(res=>{
-        setFavoritado(res.AlreadyExists);
+        setFavoritado(res.alreadyExists);
       }).catch(error=>console.log(error));
     }
   },[pokeId]);

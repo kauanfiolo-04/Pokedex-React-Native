@@ -3,12 +3,8 @@ import mysql from 'mysql2';
 
 config();
 
-const connection = mysql.createConnection({
-  host: process.env.HOST ?? 'localhost',
-  port: process.env.PORT ?? 3306,
-  user: process.env.USER ?? 'root',
-  password: process.env.PASSWORD ?? 'root',
-  database: process.env.DATABASE ?? 'favorited_pokemons'
-});
+const urlDB = `mysql://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/${process.env.DATABASE}`;
+
+const connection = mysql.createConnection(urlDB);
 
 export default connection;

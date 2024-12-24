@@ -1,11 +1,14 @@
+import {config} from 'dotenv';
 import mysql from 'mysql2';
 
+config();
+
 const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'root',
-  password: 'root',
-  database: 'favorited_pokemons'
+  host: process.env.HOST ?? 'localhost',
+  port: process.env.PORT ?? 3306,
+  user: process.env.USER ?? 'root',
+  password: process.env.PASSWORD ?? 'root',
+  database: process.env.DATABASE ?? 'favorited_pokemons'
 });
 
 export default connection;

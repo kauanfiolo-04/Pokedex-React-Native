@@ -13,8 +13,8 @@ class PokemonController {
     return pokemonModel.put(poke);
   }
 
-  delete(id) {
-    return 'Apagando pokemon de id: ' + id;
+  delete(pokeId) {
+    return pokemonModel.delete(pokeId);
   }
 
   getFavorited(pokeId) {

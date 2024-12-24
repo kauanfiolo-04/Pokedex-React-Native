@@ -57,7 +57,7 @@ class PokemonModel {
     return new Promise((resolve, reject) => {
       connection.query(sql, [{ ...poke, pokeTypes: JSON.stringify(pokeTypes) }, pokeId], (err, res) => {
         if (err) {
-          console.error('Erro ao atualizar Pokémon:', err);
+          console.error('Erro ao atualizar Pokémon: ', err);
           reject(err);
         }
   
@@ -65,8 +65,29 @@ class PokemonModel {
           console.log('Pokémon atualizado com sucesso.');
           resolve({ updated: true, ...poke });
         } else {
-          console.error('Nenhuma registro foi alterado');
+          console.error('Nenhum registro foi alterado');
           reject({ updated: false, ...poke });
+        }
+      });
+    });
+  }
+
+  delete(pokeId){
+    const sql = `DELETE FROM pokemons WHERE pokeId = ?`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(sql, [pokeId], (err, res) => {
+        if (err) {
+          console.error('Erro ao deletar pokemon: ', err)
+          reject(err);
+        }
+
+        if (res.affectedRows > 0) {
+          console.log('Pokémon excluído com sucesso.');
+          resolve({ deleted: true });
+        } else {
+          console.log('Pokémon não encontrado.');
+          resolve({ deleted: false });
         }
       });
     });

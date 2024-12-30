@@ -1,5 +1,5 @@
 const removeFavorite=async(pokeId)=>{
-  const url=`https://pokedex-react-native.railway.internal/poke/${pokeId}`;
+  const url=`https://pokedex-react-native-production.up.railway.app/poke/${pokeId}`;
 
   return await fetch(url,{method:"delete"}).then(r=>{
     if(r.status===200){

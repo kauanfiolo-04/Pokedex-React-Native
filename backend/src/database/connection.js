@@ -3,7 +3,11 @@ import mysql from 'mysql2';
 
 config();
 
-const urlDB = `mysql://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/${process.env.DATABASE}`;
+const urlDB = process.env.DATABASE_URL;
+
+// `mysql://${process.env.USER}:${process.env.PASSWORD}@${process.env.HOST}:${process.env.PORT}/${process.env.DATABASE}`;
+
+console.log(urlDB);
 
 const connection = mysql.createConnection(urlDB);
 

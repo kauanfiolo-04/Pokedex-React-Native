@@ -5,20 +5,20 @@ class PokemonController {
     return pokemonModel.getAll();
   }
 
-  post(poke) {
-    return pokemonModel.post(poke);
+  post(poke, userId) {
+    return pokemonModel.post(poke, userId);
   }
 
-  put(poke) {
-    return pokemonModel.put(poke);
+  put(poke, userId) {
+    return pokemonModel.put(poke, userId);
   }
 
-  delete(pokeId) {
-    return pokemonModel.delete(pokeId);
+  delete(pokeId, userId) {
+    return pokemonModel.delete(pokeId, userId);
   }
 
-  getFavorited(pokeId) {
-    return pokemonModel.getFavorited(pokeId);
+  getFavorited(pokeId, userId) {
+    return pokemonModel.getFavorited(pokeId, userId);
   }
 }
 

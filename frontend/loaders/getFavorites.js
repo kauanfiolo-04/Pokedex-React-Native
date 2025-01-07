@@ -1,5 +1,5 @@
 const getFavorites=async()=>{
-  const url="https://pokedex-react-native-production.up.railway.app/poke";
+  const url="https://pokedex-react-native.onrender.com/poke";
 
   return await fetch(url).then(r=>{
     if(r.status===200){

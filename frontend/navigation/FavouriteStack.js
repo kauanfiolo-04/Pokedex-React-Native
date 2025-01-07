@@ -10,12 +10,12 @@ const FavouriteStack = () => {
       <Stack.Screen
         name="FavouriteScreen"
         component={FavouriteScreen}
-        options={{ title: "Pokemons Favoritos" }}
+        options={{ title: "Favourited Pokemons" }}
       />
       <Stack.Screen
         name="PokeScreen"
         component={PokeScreen}
-        options={{ title: "Pokémon Details" }}
+        options={{ title: "Pokemon Details" }}
       />
     </Stack.Navigator>
   );

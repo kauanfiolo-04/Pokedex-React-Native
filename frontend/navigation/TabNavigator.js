@@ -23,7 +23,7 @@ export default function TabNavigator() {
         tabBarActiveTintColor: "#6200ee",
         tabBarInactiveTintColor: "gray",
       })}
-    >
+    > 
       <Tab.Screen
         name="Pokedex"
         component={PokedexStack} // Usa o Stack Navigator para Home

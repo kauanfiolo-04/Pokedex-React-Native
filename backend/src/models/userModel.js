@@ -27,7 +27,7 @@ class UserModel {
           return reject(new Error(err));
         }
 
-        return resolve(res);
+        return resolve(res.map(user => (({ created_at, ...rest }) => rest)(user)));
       });
     });
   }
@@ -54,7 +54,7 @@ class UserModel {
     const sql = `UPDATE users SET ? WHERE id = ?`;
 
     return new Promise((resolve, reject) => {
-      connection.query(sql, [{userParams}, userId], (err,res) => {
+      connection.query(sql, [userParams, userId], (err,res) => {
         if (err) {
           console.error('Erro ao editar usuário!', err);
           return reject(new Error(err));

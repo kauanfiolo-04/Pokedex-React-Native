@@ -17,27 +17,62 @@ router.post('/user', async (req, res) => {
   }
 
   try {
-    // const alreadyExists = await pokemonController.getFavorited(userId);
-    // if (alreadyExists) {
-    //     return res.status(409).send({ message: "Erro: Pokémon já existe!" });
-    // }
-
     const user = await userController.post({ username, email, password });
     return res.status(201).send(user);
-  } catch (error) {
-    console.error(error);
-    return res.status(500).send({ message: error.message });
+  } catch (err) {
+    console.error(err);
+    return res.status(err.message.includes('Duplicate') ? 400 : 500).send({ message: err.message });
   }
 });
 
-router.get('/user', async (req, res)=>{
+router.get('/user', async (req, res) => {
   try {
     const users = await userController.getAll();
     
     return res.status(200).send(users);
   } catch (err) {
-    return res.send(400).send({ message: err.message });
+    console.error(err);
+    return res.status(400).send({ message: err.message });
   }
-})
+});
+
+router.get('/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+  
+  try {
+    const user = await userController.getUser(userId);
+
+    return res.status(200).send(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: err.message });
+  }
+});
+
+router.put('/user/:userId', async (req, res) => {
+  const { userId } = req.params;
+
+  const { username, email, password } = req.body;
+
+  if (!username) {
+    return res.status(400).send({ message: "Erro: propriedade 'username' necessária!" });
+  }
+  if (!email) {
+    return res.status(400).send({ message: "Erro: propriedade 'email' necessária!" });
+  }
+  if(!password) {
+    return res.status(400).send({ message: "Erro: propriedade 'password' necessária!" });
+  }
+
+  try {
+    const user = await userController.put({ username, email, password }, userId)
+    console.log(user)
+
+    return res.status(201).send(user);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: err.message })
+  }
+});
 
 export default router;

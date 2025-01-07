@@ -1,7 +1,7 @@
 {
   "name": "backend",
-  "version": "1.0.0",
-  "description": "CRUD Favourite Pokémons",
+  "version": "1.5.0",
+  "description": "User and Favourite Pokemons",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

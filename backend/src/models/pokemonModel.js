@@ -90,6 +90,6 @@ class PokemonModel {
       });
     });
   }
-}
+}             
 
 export default new PokemonModel();

@@ -26,5 +26,5 @@ app.listen(port, (error) => {
     return;
   }
 
-  console.log(`Rodando no: localhost:${port}`);
+  console.log(`Rodando no: http://localhost:${port}`);
 });

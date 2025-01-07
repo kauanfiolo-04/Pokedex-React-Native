@@ -32,7 +32,7 @@ class Tables {
         id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
         pokeId VARCHAR(10),
         pokeName VARCHAR(255),
-        pokeTypes TEXT,
+        pokeTypes JSON,
         userId VARCHAR(36) NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (userId) REFERENCES users(id) ON DELETE CASCADE

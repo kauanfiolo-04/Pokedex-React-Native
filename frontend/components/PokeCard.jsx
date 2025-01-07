@@ -8,10 +8,9 @@ const PokeCard = ({ id, name, types, img}) => {
   const navigation = useNavigation(); // Se estiver usando React Navigation
 
   return (
-    
     <Pressable
       onPress={() => {
-        navigation.navigate('Pokémon', { name }) 
+        navigation.navigate('PokeScreen', { name }) 
       }}
       style={styles.card}
     >

@@ -32,21 +32,24 @@ class PokemonModel {
   }
 
   post(poke, userId) {
-    const { pokeTypes } = poke;
     const sql = `INSERT INTO pokemons SET ?`;
   
     return new Promise((resolve, reject) => {
-      connection.query(sql, { ...poke, pokeTypes: JSON.stringify(pokeTypes), userId }, (err, res) => {
+      connection.query(sql, { ...poke, pokeTypes: JSON.stringify(poke.pokeTypes), userId }, (err, res) => {
         if (err) {
           console.error('Erro ao inserir Pokémon:', err);
           return reject(new Error(err));
         }
-  
+      
         console.log('Pokémon inserido com sucesso.');
-        // Retorna o ID inserido e os dados do Pokémon
-        return resolve({ id: res.insertId, ...poke });
-      });
+        // Exlui o userId e created_at na response
+        const filteredPokemon = (({ userId, created_at, ...rest }) => rest)(poke);
+        
+        // Retorna o ID inserido e os dados do user
+        return resolve({ id: res.insertId, ...filteredPokemon });
+      });    
     });
+
   }
 
   put(poke, userId) {

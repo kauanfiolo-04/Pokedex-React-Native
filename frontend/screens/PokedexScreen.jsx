@@ -1,10 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { View, StyleSheet, TextInput, Button, Text, TouchableOpacity, Image} from "react-native";
 import getPokemons from "loaders/getPokemons";
-import getPokemon from "loaders/getPokemon";
 import searchMenuBarLoader from "loaders/searchBarLoader";
-import getFavorites from "loaders/getFavorites";
-import Svg, { Path } from "react-native-svg";
 import ListPokemons from "../components/ListPokemons";
 
 const Pagination = ({ pagination, disable, paginationRef, handlePrev, handleNext }) => (
@@ -59,25 +56,6 @@ const PokedexScreen = ({ Limit, Offset }) => {
     }
   };
 
-  const fetchFiltered = async () => {
-    setPokemons([]);
-    setDisablePagination(true);
-    const data = await getFavorites();
-    console.log(data);
-    if (data) {
-      const pokeCards = [];
-      for (const poke of data) {
-        const pokeCard = await getPokemon(poke.pokeId);
-        pokeCards.push(pokeCard);
-      }
-      setPokemons(pokeCards);
-      setFiltered(true);
-    }else{
-      setDisablePagination(false);
-      setPokemons(standardPokes.current);
-    }
-  };
-
   const handlePrev = (event) => {
     event.preventDefault();
     setPagination((prevState) => prevState - 1);
@@ -88,16 +66,16 @@ const PokedexScreen = ({ Limit, Offset }) => {
     setPagination((prevState) => prevState + 1);
   };
 
-  const handleFilter = (event) => {
-    event.preventDefault();
-    if(filtered){
-      setPokemons(standardPokes.current);
-      setDisablePagination(false);
-      setFiltered(false);
-    }else{
-      fetchFiltered();
-    }
-  };
+  // const handleFilter = (event) => {
+  //   event.preventDefault();
+  //   if(filtered){
+  //     setPokemons(standardPokes.current);
+  //     setDisablePagination(false);
+  //     setFiltered(false);
+  //   }else{
+  //     fetchFiltered();
+  //   }
+  // };
 
   useEffect(() => {
     setPokemons([]);
@@ -120,13 +98,6 @@ const PokedexScreen = ({ Limit, Offset }) => {
   return (
     <View style={styles.container}>
       <View style={styles.barContainer}>
-        <View style={styles.favButtonView}>
-          <TouchableOpacity onPress={handleFilter} activeOpacity={filtered ? 1 : 0.2} style={{...styles.favButton, opacity:filtered ? 0.2 : 1}}>
-            <Svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <Path d="M12 2L14.39 8.63L21.5 9.27L16 13.14L17.88 19.94L12 16.41L6.12 19.94L8 13.14L2.5 9.27L9.61 8.63L12 2Z" fill="black"/>
-            </Svg>
-          </TouchableOpacity>
-        </View>
         <TextInput
           value={search}
           style={styles.searchArea}
@@ -154,7 +125,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
   },
   searchArea: {
-    width: "85%",
+    width: "100%",
     height: 40,
     paddingHorizontal: 10,
     borderWidth: 1,
@@ -172,25 +143,9 @@ const styles = StyleSheet.create({
   },
   barContainer: {
     display: "flex",
-    flexDirection: "row-reverse",
-    justifyContent: "space-between",
+    flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
-  },
-  favButtonView: {
-    width: "15%",
-    marginLeft: 5,
-  },
-  favButton: {
-    height: 40,
-    display:"flex",
-    justifyContent:"center",
-    alignItems:"center",
-    backgroundColor: "#ffd000",
-    borderRadius: 5,
-    borderWidth: 1,
-    borderColor: "#ffd000",
-    borderRadius: 5
   }
 });
 

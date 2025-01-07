@@ -1,7 +1,7 @@
 
 import { View, FlatList, StyleSheet } from "react-native";
-import Loading from "./Loading";
-import PokeCard from "./PokeCard";
+import Loading from "components/Loading";
+import PokeCard from "components/PokeCard/PokeCard";
 
 const ListPokemons = ({pokemons}) => {
   const renderItem = ({ item }) => (

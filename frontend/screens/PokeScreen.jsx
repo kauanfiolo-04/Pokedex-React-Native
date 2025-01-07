@@ -1,5 +1,5 @@
 import { View, StyleSheet } from "react-native";
-import PokeInfo from "components/PokeInfo";
+import PokeInfo from "components/PokeCard/PokeInfo/PokeInfo";
 import { useEffect, useState } from "react";
 import getPokemon from "loaders/getPokemon";
 

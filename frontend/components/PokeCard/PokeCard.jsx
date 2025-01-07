@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet, Pressable } from 'react-native';
-import TypeInfo from './TypeInfo'; // Assumindo que TypeInfo é compatível com React Native
+import TypeInfo from './PokeInfo/TypeInfo'; // Assumindo que TypeInfo é compatível com React Native
 // Importe o sistema de navegação, se necessário, para lidar com a navegação
 import { useNavigation } from '@react-navigation/native'
 

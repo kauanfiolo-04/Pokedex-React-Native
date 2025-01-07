@@ -1,8 +1,8 @@
 import React from "react";
 import { Text, Image, View, StyleSheet } from "react-native";
-import TypeInfo from "components/TypeInfo.jsx";
-import PokeDescription from "components/PokeDescription";
-import FavoriteButton from "components/FavoriteButton";
+import TypeInfo from "components/PokeCard/PokeInfo/TypeInfo";
+import PokeDescription from "components/PokeCard/PokeDescription";
+import FavoriteButton from "components/PokeCard/FavoriteButton";
 
 const PokeInfo = ({ id, name, types, img, ...props }) => {
 

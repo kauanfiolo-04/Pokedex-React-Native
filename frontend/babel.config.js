@@ -8,7 +8,8 @@ module.exports = function(api) {
         alias:{
           components:'./components',
           screents:'./screens',
-          loaders:'./loaders'
+          loaders:'./loaders',
+          assets:'./assets'
         }
       }]
     ]

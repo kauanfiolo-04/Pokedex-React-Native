@@ -8,8 +8,8 @@ const PokeDescription = ({ style, pokeName }) => {
   useEffect(() => {
     getDescription(pokeName)
       .then((res) => {
-        const descArr=res.flavor_text_entries;
-        if(descArr?.length){
+        const descArr = res.flavor_text_entries;
+        if(descArr?.length) {
           const descriptionText = descArr[0]?.flavor_text ?? 'DESC PADRÃO';
           const formattedText = descriptionText.replace(/\n/g, " ");
           setDescription(formattedText);

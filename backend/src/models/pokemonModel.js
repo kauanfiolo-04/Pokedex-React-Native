@@ -1,11 +1,11 @@
 import connection from '../database/connection.js';
 
 class PokemonModel {
-  getAll() {
-    const sql = `SELECT * FROM pokemons;`;
+  getAll(userId) {
+    const sql = `SELECT * FROM pokemons WHERE userId = ?`;
 
     return new Promise((resolve, reject) => {
-      connection.query(sql, {}, (err, res) => {
+      connection.query(sql, userId, (err, res) => {
         if (err) {
           console.error('Deu erro no listar...', err);
           return reject(new Error(err));

@@ -1,8 +1,8 @@
 import pokemonModel from "../models/pokemonModel.js";
 
 class PokemonController {
-  getAll() {
-    return pokemonModel.getAll();
+  getAll(userId) {
+    return pokemonModel.getAll(userId);
   }
 
   post(poke, userId) {

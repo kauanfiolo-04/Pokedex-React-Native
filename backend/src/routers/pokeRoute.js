@@ -81,9 +81,11 @@ router.put('/poke/:pokeId', async (req, res) => {
   }
 });
 
-router.get('/poke', async (req, res)=>{
+router.get('/poke/:userId', async (req, res)=>{
+  const { userId } = req.params;
+
   try {
-    const pokes = await pokemonController.getAll();
+    const pokes = await pokemonController.getAll(userId);
     
     return res.status(200).send(pokes);
   } catch (err) {

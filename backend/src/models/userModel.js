@@ -97,7 +97,7 @@ class UserModel {
           return reject(new Error(err));
         }
 
-        return resolve({checked: res.length > 0});
+        return resolve(res.length > 0 ? {checked: true, userId: res[0].id} : {checked: false});
       });
     });
   }

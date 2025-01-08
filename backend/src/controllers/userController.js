@@ -20,6 +20,10 @@ class UserController {
   delete(userId) {
     return userModel.delete(userId);
   }
+
+  checkCredentials(email, pass) {
+    return userModel.checkCredentials(email, pass);
+  }
 }
 
 export default new UserController();

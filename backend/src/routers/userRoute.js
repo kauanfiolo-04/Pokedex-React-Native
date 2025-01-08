@@ -75,4 +75,23 @@ router.put('/user/:userId', async (req, res) => {
   }
 });
 
+router.post('/user/checkCredentials', async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email) {
+    return res.status(400).send({ message: "Erro: propriedade 'email' necessária!" });
+  }
+  if(!password) {
+    return res.status(400).send({ message: "Erro: propriedade 'password' necessária!" });
+  }
+
+  try {
+    const checked = await userController.checkCredentials(email, password);
+    return res.status(200).send(checked);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).send({ message: err.message });
+  }
+});
+
 export default router;

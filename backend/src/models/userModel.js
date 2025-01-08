@@ -86,6 +86,21 @@ class UserModel {
       });
     });
   }
+  
+  checkCredentials(email, pass) {
+    const sql = `SELECT * FROM users WHERE email = ? AND password = ?`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(sql, [email, pass], (err, res) => {
+        if (err) {
+          console.error('Erro ao checkar usuário!', err);
+          return reject(new Error(err));
+        }
+
+        return resolve({checked: res.length > 0});
+      });
+    });
+  }
 }
 
 export default new UserModel();

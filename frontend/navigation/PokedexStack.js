@@ -11,12 +11,12 @@ const PokedexStack = () => {
       <Stack.Screen
         name="PokedexScreen"
         component={PokedexScreen}
-        options={{ title: "Home" }}
+        options={{ title: "Pokedex"}}
       />
       <Stack.Screen
         name="PokeScreen"
         component={PokeScreen}
-        options={{ title: "Pokémon Details" }}
+        options={{ title: "Pokemon Details" }}
       />
     </Stack.Navigator>
   );

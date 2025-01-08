@@ -10,34 +10,28 @@ const Tab = createBottomTabNavigator();
 export default function TabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName="Login"
+      initialRouteName="Pokedex"
       screenOptions={({ route }) => ({
         tabBarIcon: route.name === "Login" ? undefined : ({ color, size }) => {
           let iconName;
           if (route.name === "Pokedex") {
             iconName = "search";
-          } else if (route.name === "Favoritos") {
+          } else if (route.name === "Favourites") {
             iconName = "favorite";
           }
           return <Icon name={iconName} size={size} color={color} />;
         },
-        tabBarStyle: { display: route.name === 'Login' ? 'none' : 'flex', },
         tabBarActiveTintColor: "#6200ee",
         tabBarInactiveTintColor: "gray",
       })}
     > 
-      <Tab.Screen
-        name="Login"
-        component={LoginScreen}
-        options={{ headerShown: false, tabBarButton: () => null }}
-      />
       <Tab.Screen
         name="Pokedex"
         component={PokedexStack} // Usa o Stack Navigator para Home
         options={{ headerShown: false }} // Esconde o header duplicado
       />
       <Tab.Screen
-        name="Favoritos"
+        name="Favourites"
         component={FavouriteStack} // Usa o Stack Navigator para Favoritos
         options={{ headerShown: false }} // Esconde o header duplicado
       />

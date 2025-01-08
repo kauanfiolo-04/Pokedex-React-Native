@@ -143,7 +143,6 @@ const styles = StyleSheet.create({
   },
   barContainer: {
     display: "flex",
-    flexDirection: "row",
     alignItems: "center",
     marginBottom: 10,
   }

@@ -1,14 +1,17 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { useState, useRef } from "react";
+import { useState } from "react";
+import checkCredentials from "../loaders/user/checkCredentials";
 
 const LoginScreen = ({ navigation }) => {
 
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    console.log(emailRef?.current.value);
-    console.log(passwordRef?.current.value);
+    console.log(email, password)
+    checkCredentials(email, password).then(res => {
+      console.log(res);
+    });
     console.log('login')
   };
 
@@ -24,12 +27,12 @@ const LoginScreen = ({ navigation }) => {
         <View style={styles.loginWrapper}>
           <View style={styles.inputWrapper}>
             <Text>Email: </Text>
-            <TextInput style={styles.searchArea} ref={emailRef}/>
+            <TextInput style={styles.searchArea} onChangeText={setEmail}/>
           </View>
 
           <View style={styles.inputWrapper}>
             <Text>Senha: </Text>
-            <TextInput style={styles.searchArea} ref={passwordRef}/>
+            <TextInput style={styles.searchArea} onChangeText={setPassword}/>
           </View>
 
           <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>

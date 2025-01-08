@@ -78,6 +78,8 @@ router.put('/user/:userId', async (req, res) => {
 router.post('/user/checkCredentials', async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(email, password)
+
   if (!email) {
     return res.status(400).send({ message: "Erro: propriedade 'email' necessária!" });
   }

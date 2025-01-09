@@ -3,9 +3,8 @@ import pokemonController from '../controllers/pokemonController.js';
 
 const router = Router();
 
-router.get('/getFavorited/:pokeId',async (req,res)=>{
-  const { pokeId } = req.params;
-  const { userId } = req.body;
+router.get('/getFavorited/:userId/:pokeId',async (req,res)=>{
+  const { pokeId, userId } = req.params;
 
   try{
     const alreadyExists = await pokemonController.getFavorited(pokeId, userId);

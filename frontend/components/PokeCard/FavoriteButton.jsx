@@ -11,8 +11,9 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
   const { user } = useUserContext();
 
   useEffect(()=>{
+    console.log('Renderiza botao')
     if(pokeId!==0){
-      checkFavorite(pokeId)
+      checkFavorite(pokeId, user.id)
       .then(res=>{
         setFavoritado(res.alreadyExists);
       }).catch(error=>console.log(error));

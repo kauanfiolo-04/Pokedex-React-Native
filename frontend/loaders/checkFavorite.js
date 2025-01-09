@@ -1,11 +1,11 @@
-const checkFavorite=async(pokeId)=>{
-  const url=`https://pokedex-react-native.onrender.com/getFavorited/${pokeId}`;
+const checkFavorite = async (pokeId, userId) => {
+  const url=`https://pokedex-react-native.onrender.com/getFavorited/${userId}/${pokeId}`;
 
   return await fetch(url).then(r=>{
     if(r.status===200){
-      return r===null ? null:r.json();
+      return r.json();
     }else{
-      return 'vazio';
+      throw new Error(r.message)
     }
   }).catch(err=>console.error('Error: '+err));
 };

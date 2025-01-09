@@ -22,7 +22,7 @@ const PokeDescription = ({ style, pokeName }) => {
 
   return (
     <View style={style}>
-       <Text>{description}</Text>
+      <Text>{description}</Text>
     </View>
   );
 };

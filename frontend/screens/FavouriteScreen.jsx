@@ -29,7 +29,6 @@ function FavouritedScreen() {
   
   useFocusEffect(
     useCallback(() => {
-      console.log('Renderizou')
       fetchFiltered();
     }, [])
   );

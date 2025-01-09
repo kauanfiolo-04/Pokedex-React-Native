@@ -1,22 +1,34 @@
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from "react-native";
-import { useState } from "react";
-import checkCredentials from "../loaders/user/checkCredentials";
+import { useEffect, useState } from "react";
+import { useUserContext } from "../context/UserContext";
+import checkCredentials from "loaders/user/checkCredentials";
 
 const LoginScreen = ({ navigation }) => {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const { user, setUser } = useUserContext();
+
+  useEffect(() => {
+    if(user.id) {
+      navigation.replace('Main', { screen: "Pokedex" });
+    }
+  });
+
   const handleLogin = () => {
     console.log(email, password)
     checkCredentials(email, password).then(res => {
-      console.log(res);
+      if(res.checked) {
+        setUser({id: res.userId});
+        navigation.replace('Main', { screen: "Pokedex" });
+      }
     });
     console.log('login')
   };
 
   const handleSignUp = () => {
-    navigation.replace('Main', { screen: "Pokedex" });
+    navigation.replace('Main', { screen: "SignUp" });
   };
 
   return (

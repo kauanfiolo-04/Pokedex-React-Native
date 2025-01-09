@@ -22,7 +22,7 @@ export default function TabNavigator() {
           return <Icon name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#6200ee",
-        tabBarInactiveTintColor: "gray",
+        tabBarInactiveTintColor: "gray"
       })}
     > 
       <Tab.Screen
@@ -33,7 +33,7 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Favourites"
         component={FavouriteStack} // Usa o Stack Navigator para Favoritos
-        options={{ headerShown: false }} // Esconde o header duplicado
+        options={{ headerShown: false, freezeOnBlur: false }} // Esconde o header duplicado e desrenderiza a tela ao sair
       />
     </Tab.Navigator>
   );

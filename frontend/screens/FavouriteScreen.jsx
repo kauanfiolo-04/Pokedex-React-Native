@@ -1,15 +1,18 @@
-import { useState, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { View, Text } from "react-native";
-import getFavorites from "../loaders/getFavorites"
-import getPokemon from "../loaders/getPokemon"
-import ListPokemons from "../components/ListPokemons";
+import getFavorites from "loaders/getFavorites"
+import getPokemon from "loaders/getPokemon"
+import ListPokemons from "components/ListPokemons";
+import { useUserContext } from "../context/UserContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 function FavouritedScreen() {
   const [pokemons, setPokemons] = useState([]);
+  const {user} = useUserContext();
   
   const fetchFiltered = async () => {
     setPokemons([]);
-    const data = await getFavorites();
+    const data = await getFavorites(user.id);
     console.log(data);
     if (data) {
       const pokeCards = [];
@@ -24,9 +27,12 @@ function FavouritedScreen() {
     }
   };
   
-  useEffect(() => {
-    fetchFiltered();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      console.log('Renderizou')
+      fetchFiltered();
+    }, [])
+  );
 
   return (
     <View>

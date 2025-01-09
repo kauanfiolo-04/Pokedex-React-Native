@@ -1,15 +1,13 @@
-const setFavorite=async(poke)=>{
+const setFavorite=async(poke, userId)=>{
   const {pokeId, pokeName, pokeTypes}=poke;
-  console.log(JSON.stringify({
-    pokeId, pokeName, pokeTypes
-  }))
+
   const url="https://pokedex-react-native.onrender.com/poke";
 
 
   return await fetch(url,{
     method:"post",
     body:JSON.stringify({
-      pokeId, pokeName, pokeTypes
+      pokeId, pokeName, pokeTypes, userId
     }),
     headers: {
       'Content-Type': 'application/json'

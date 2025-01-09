@@ -3,9 +3,12 @@ import { TouchableOpacity, Text, StyleSheet } from "react-native";
 import checkFavorite from  "loaders/checkFavorite.js";
 import setFavorite from "loaders/setFavorite";
 import removeFavorite from "loaders/removeFavorite";
+import { useUserContext } from "../../context/UserContext";
 
 const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
-  const [favoritado, setFavoritado]=useState(false);
+  const [favoritado, setFavoritado] = useState(false);
+
+  const { user } = useUserContext();
 
   useEffect(()=>{
     if(pokeId!==0){
@@ -25,9 +28,9 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
     }else{
       setFavorite({
         pokeId,
-        pokeName,
+        pokeName, 
         pokeTypes
-      }).then(r=>{
+      }, user.id).then(r=>{
         console.log(r);
         if(r) setFavoritado(true);
       }).catch(error=>console.error(error));

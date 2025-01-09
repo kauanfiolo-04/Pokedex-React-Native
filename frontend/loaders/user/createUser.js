@@ -1,5 +1,5 @@
 const createUser = async (user) => {
-  const url = "https://pokedex-react-native.onrender.com/poke";
+  const url = "https://pokedex-react-native.onrender.com/user";
 
   return await fetch(url,{
     method:"POST",

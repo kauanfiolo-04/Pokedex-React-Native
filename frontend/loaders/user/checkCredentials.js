@@ -1,8 +1,13 @@
 const checkCredentials = async (email, password) => {
-  const url = "http://localhost:3000/user/checkCredentials";
+  console.log(email, password)
+
+  const url = "https://pokedex-react-native.onrender.com/user/checkCredentials";
 
   return await fetch(url, {
-    method: "post",
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({ email, password })
   }).then(r=>{
     return r.json();

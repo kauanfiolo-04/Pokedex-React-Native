@@ -3,7 +3,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Icon from "react-native-vector-icons/MaterialIcons";
 import FavouriteStack from "./FavouriteStack";
 import PokedexStack from "./PokedexStack";
-import LoginScreen from "../screens/LoginScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -33,7 +32,7 @@ export default function TabNavigator() {
       <Tab.Screen
         name="Favourites"
         component={FavouriteStack} // Usa o Stack Navigator para Favoritos
-        options={{ headerShown: false, freezeOnBlur: false }} // Esconde o header duplicado e desrenderiza a tela ao sair
+        options={{ headerShown: false }} // Esconde o header duplicado
       />
     </Tab.Navigator>
   );

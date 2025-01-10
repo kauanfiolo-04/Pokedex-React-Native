@@ -1,50 +1,61 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
-import { useEffect, useState } from "react";
-import { useUserContext } from "../context/UserContext";
-import checkCredentials from "loaders/user/checkCredentials";
+import { useState } from "react";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useUserContext } from "../context/UserContext";
+import createUser from "../loaders/user/createUser";
 
-const LoginScreen = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
-  const { user, setUser } = useUserContext();
-
-  useEffect(() => {
-    // if(user.id) {
-    //   navigation.replace('Main', { screen: "Pokedex" });
-    // }
+const SignUpScreen = ({ navigation }) => {
+  const [info, setInfo] = useState({
+    username: null,
+    email: null,
+    password: null,
   });
 
-  const handleLogin = () => {
-    console.log(email, password)
-    checkCredentials(email, password).then(res => {
-      if(res.checked) {
+  const { setUser } = useUserContext();
+
+  const handleUsername = (text) => {
+    setInfo(prevState => ({ ...prevState, username:text.length ? text : null}));
+  }
+
+  const handlePassword = (text) => {
+    setInfo(prevState => ({ ...prevState, password:text.length ? text : null}));
+  }
+
+  const handleEmail = (text) => {
+    setInfo(prevState => ({ ...prevState, email:text.length ? text : null}));
+  }
+
+  const handleSignUp = () => {
+    createUser(info).then(res => {
+      if(res.id) {
         setUser({id: res.userId});
         navigation.replace('Main', { screen: "Pokedex" });
       }
     });
-    console.log('login')
-  };
-
-  const handleSignUp = () => {
-    navigation.replace('SignUp');
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <SafeAreaView style={styles.container}>
-        <View style={styles.loginContainer}>
-          <Text style={styles.title}>Login</Text>
+        <View style={styles.signUpContainer}>
+          <Text style={styles.title}>Sign Up</Text>
 
-          <View style={styles.loginWrapper}>
+          <View style={styles.signUpWrapper}>
+            <View style={styles.inputWrapper}>
+              <Text>Username: </Text>
+              <TextInput 
+                style={styles.searchArea} 
+                onChangeText={handleUsername}
+                autoCapitalize="none"
+              />
+            </View>
+
             <View style={styles.inputWrapper}>
               <Text>Email: </Text>
               <TextInput 
                 style={styles.searchArea} 
-                onChangeText={setEmail}
-                keyboardType="email-address"
+                onChangeText={handleEmail} 
+                keyboardType="email-address" 
                 autoCapitalize="none"
               />
             </View>
@@ -53,20 +64,13 @@ const LoginScreen = ({ navigation }) => {
               <Text>Senha: </Text>
               <TextInput 
                 style={styles.searchArea} 
-                onChangeText={setPassword}
+                onChangeText={handlePassword} 
                 secureTextEntry
               />
             </View>
 
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.textLoginButton}>Login</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.signUp}>
-            <Text>Don't have an account?</Text>
-            <TouchableOpacity onPress={handleSignUp}>
-              <Text style={styles.signUpButton}>Sign-up here!</Text>
+            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+              <Text style={styles.textSignUpButton}>Sign Up</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -85,7 +89,7 @@ const styles = StyleSheet.create({
     height: "100%",
     backgroundColor: "#ccc"
   },
-  loginContainer: {
+  signUpContainer: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -100,7 +104,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 700
   },
-  loginWrapper: {
+  signUpWrapper: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -123,7 +127,7 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 5,
   },
-  loginButton: {
+  signUpButton: {
     display: "flex",
     alignItems: "center",
     width: "100%",
@@ -131,20 +135,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     paddingVertical: 5 
   },
-  textLoginButton: {
+  textSignUpButton: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: 700
-  },
-  signUp: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center"
-  },
-  signUpButton: {
-    color: "blue",
     fontWeight: 700
   }
 });
 
-export default LoginScreen;
+export default SignUpScreen;

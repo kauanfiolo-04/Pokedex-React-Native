@@ -11,7 +11,7 @@ const createUser = async (user) => {
     if(r.status===201){
       return r.json();
     }else{
-      return null;
+      throw new Error(r.message);
     }
   }).catch(error=>console.error(error));
 };

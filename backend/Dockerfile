@@ -1,7 +1,0 @@
-FROM mysql:latest
-ENV MYSQL_ROOT_PASSWORD=root
-ENV MYSQL_DATABASE=poke_app_database
-ENV MYSQL_USER=kauan
-ENV MYSQL_PASSWORD=zapdos
-EXPOSE 3306
-CMD ["mysqld"]

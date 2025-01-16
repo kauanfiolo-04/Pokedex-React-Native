@@ -1,3 +1,4 @@
 # Pokedex-React-Native
 Trabalho da faculdade em React Native
-Upei no Railway o mysql e o backend
+<br/>
+Atualmente aprimorei o backend do projeto e adicionando um sistema de login, para que cada usuário consiga favoritar seus pokemons favoritos

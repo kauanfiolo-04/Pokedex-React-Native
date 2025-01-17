@@ -1,13 +1,12 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View,Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform,} from "react-native";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import checkCredentials from "loaders/user/checkCredentials";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LoginScreen = ({ navigation }) => {
-
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const { user, setUser } = useUserContext();
 
@@ -18,72 +17,79 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const handleLogin = () => {
-    console.log(email, password)
-    checkCredentials(email, password).then(res => {
-      if(res.checked) {
-        setUser({id: res.userId});
-        navigation.replace('Main', { screen: "Pokedex" });
+    console.log(email, password);
+    checkCredentials(email, password).then((res) => {
+      console.log(res)
+      if (res.checked) {
+        setUser({ id: res.userId });
+        navigation.replace("Main", { screen: "Pokedex" });
       }
     });
-    console.log('login')
+    console.log("login");
   };
 
   const handleSignUp = () => {
-    navigation.replace('SignUp');
+    navigation.replace("SignUp");
   };
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loginContainer}>
-          <Text style={styles.title}>Login</Text>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <SafeAreaView style={styles.innerContainer}>
+          <View style={styles.loginContainer}>
+            <Text style={styles.title}>Login</Text>
 
-          <View style={styles.loginWrapper}>
-            <View style={styles.inputWrapper}>
-              <Text>Email: </Text>
-              <TextInput 
-                style={styles.searchArea} 
-                onChangeText={setEmail}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
+            <View style={styles.loginWrapper}>
+              <View style={styles.inputWrapper}>
+                <Text>Email: </Text>
+                <TextInput
+                  style={styles.searchArea}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Text>Senha: </Text>
+                <TextInput
+                  style={styles.searchArea}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                <Text style={styles.textLoginButton}>Login</Text>
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.inputWrapper}>
-              <Text>Senha: </Text>
-              <TextInput 
-                style={styles.searchArea} 
-                onChangeText={setPassword}
-                secureTextEntry
-              />
+            <View style={styles.signUp}>
+              <Text>Don't have an account?</Text>
+              <TouchableOpacity onPress={handleSignUp}>
+                <Text style={styles.signUpButton}>Sign-up here!</Text>
+              </TouchableOpacity>
             </View>
-
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-              <Text style={styles.textLoginButton}>Login</Text>
-            </TouchableOpacity>
           </View>
-
-          <View style={styles.signUp}>
-            <Text>Don't have an account?</Text>
-            <TouchableOpacity onPress={handleSignUp}>
-              <Text style={styles.signUpButton}>Sign-up here!</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </SafeAreaView>
+        </SafeAreaView>
+      </KeyboardAvoidingView>
     </TouchableWithoutFeedback>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+    flex: 1,
+    backgroundColor: "#ccc",
+  },
+  innerContainer: {
+    flex: 1,
     justifyContent: "center",
-    width: "100%",
-    height: "100%",
-    backgroundColor: "#ccc"
+    alignItems: "center",
   },
   loginContainer: {
     display: "flex",
@@ -91,14 +97,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "80%",
-    height: "auto",
     padding: 20,
     backgroundColor: "#fff",
-    borderRadius: 5
+    borderRadius: 5,
   },
   title: {
     fontSize: 24,
-    fontWeight: 700
+    fontWeight: "700",
   },
   loginWrapper: {
     display: "flex",
@@ -106,14 +111,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     gap: 30,
-    width: "100%"
+    width: "100%",
   },
   inputWrapper: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "start",
+    alignItems: "flex-start",
     gap: 5,
-    width: "100%"
+    width: "100%",
   },
   searchArea: {
     width: "100%",
@@ -129,22 +134,22 @@ const styles = StyleSheet.create({
     width: "100%",
     backgroundColor: "blue",
     borderRadius: 5,
-    paddingVertical: 5 
+    paddingVertical: 5,
   },
   textLoginButton: {
     color: "#fff",
     fontSize: 20,
-    fontWeight: 700
+    fontWeight: "700",
   },
   signUp: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
+    alignItems: "center",
   },
   signUpButton: {
     color: "blue",
-    fontWeight: 700
-  }
+    fontWeight: "700",
+  },
 });
 
 export default LoginScreen;

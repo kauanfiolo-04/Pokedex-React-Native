@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Pressable, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useUserContext } from "../context/UserContext";
 import createUser from "../loaders/user/createUser";
@@ -35,47 +35,53 @@ const SignUpScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.signUpContainer}>
-          <Text style={styles.title}>Sign Up</Text>
+    <KeyboardAvoidingView
+      style={{flex: 1}}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.signUpContainer}>
+            <Text style={styles.title}>Sign Up</Text>
 
-          <View style={styles.signUpWrapper}>
-            <View style={styles.inputWrapper}>
-              <Text>Username: </Text>
-              <TextInput 
-                style={styles.searchArea} 
-                onChangeText={handleUsername}
-                autoCapitalize="none"
-              />
+            <View style={styles.signUpWrapper}>
+              <View style={styles.inputWrapper}>
+                <Text>Username: </Text>
+                <TextInput 
+                  style={styles.searchArea} 
+                  onChangeText={handleUsername}
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Text>Email: </Text>
+                <TextInput 
+                  style={styles.searchArea} 
+                  onChangeText={handleEmail} 
+                  keyboardType="email-address" 
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <View style={styles.inputWrapper}>
+                <Text>Senha: </Text>
+                <TextInput 
+                  style={styles.searchArea} 
+                  onChangeText={handlePassword} 
+                  secureTextEntry
+                  autoCapitalize="none"
+                />
+              </View>
+
+              <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
+                <Text style={styles.textSignUpButton}>Sign Up</Text>
+              </TouchableOpacity>
             </View>
-
-            <View style={styles.inputWrapper}>
-              <Text>Email: </Text>
-              <TextInput 
-                style={styles.searchArea} 
-                onChangeText={handleEmail} 
-                keyboardType="email-address" 
-                autoCapitalize="none"
-              />
-            </View>
-
-            <View style={styles.inputWrapper}>
-              <Text>Senha: </Text>
-              <TextInput 
-                style={styles.searchArea} 
-                onChangeText={handlePassword} 
-                secureTextEntry
-              />
-            </View>
-
-            <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
-              <Text style={styles.textSignUpButton}>Sign Up</Text>
-            </TouchableOpacity>
           </View>
-        </View>
-      </SafeAreaView>
-    </TouchableWithoutFeedback>
+        </SafeAreaView>
+      </Pressable>
+    </KeyboardAvoidingView>
   );
 };
 

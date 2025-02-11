@@ -22,7 +22,7 @@ const FavoriteButton=({pokeId, pokeName, pokeTypes})=>{
 
   const handleFavorite=()=>{
     if(favoritado){
-      removeFavorite(pokeId).then(r=>{
+      removeFavorite(pokeId, user.id).then(r=>{
         console.log(r);
         if(r) setFavoritado(false);
       }).catch(error=>console.error(error));

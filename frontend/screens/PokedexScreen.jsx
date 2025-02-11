@@ -106,7 +106,7 @@ const PokedexScreen = ({ Limit, Offset }) => {
         />
       </View>
 
-      <ListPokemons pokemons={pokemons} />
+      {pokemons?.length > 0 && <ListPokemons pokemons={pokemons} />}
 
       <Pagination 
         pagination={pagination} 

@@ -1,4 +1,4 @@
-import { View,Text, TextInput, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Keyboard, KeyboardAvoidingView, Platform,} from "react-native";
+import { View,Text, TextInput, StyleSheet, TouchableOpacity, Pressable, Keyboard, KeyboardAvoidingView, Platform,} from "react-native";
 import { useEffect, useState } from "react";
 import { useUserContext } from "../context/UserContext";
 import checkCredentials from "loaders/user/checkCredentials";
@@ -17,15 +17,12 @@ const LoginScreen = ({ navigation }) => {
   });
 
   const handleLogin = () => {
-    console.log(email, password);
     checkCredentials(email, password).then((res) => {
-      console.log(res)
       if (res.checked) {
         setUser({ id: res.userId });
         navigation.replace("Main", { screen: "Pokedex" });
       }
     });
-    console.log("login");
   };
 
   const handleSignUp = () => {
@@ -33,11 +30,11 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-      >
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
+      <Pressable onPress={Keyboard.dismiss} style={{flex: 1}}>
         <SafeAreaView style={styles.innerContainer}>
           <View style={styles.loginContainer}>
             <Text style={styles.title}>Login</Text>
@@ -76,8 +73,8 @@ const LoginScreen = ({ navigation }) => {
             </View>
           </View>
         </SafeAreaView>
-      </KeyboardAvoidingView>
-    </TouchableWithoutFeedback>
+      </Pressable>
+    </KeyboardAvoidingView>
   );
 };
 

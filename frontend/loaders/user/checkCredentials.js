@@ -1,5 +1,5 @@
 const checkCredentials = async (email, password) => {
-  console.log(email, password)
+  // console.log(email, password)
 
   const url = "https://pokedex-react-native.onrender.com/user/checkCredentials";
 

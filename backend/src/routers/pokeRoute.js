@@ -36,6 +36,8 @@ router.post('/poke', async (req,res)=> {
 router.delete('/poke/:pokeId', async (req,res)=>{
   const { userId } = req.body; 
 
+  console.log(req.body)
+
   if(!userId) {
     return res.status(400).send({ message: "Erro: propriedade 'userId' necessária!" });
   }
